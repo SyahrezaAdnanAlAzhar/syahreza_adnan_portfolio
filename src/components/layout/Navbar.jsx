@@ -22,6 +22,7 @@ const NavWrapper = styled.nav`
 `;
 
 const Logo = styled.a`
+  font-family: "Audiowide", sans-serif; 
   font-size: 1.5rem;
   font-weight: bold;
   color: #66D9EF; 
