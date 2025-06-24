@@ -3,8 +3,8 @@ import { FaGithub, FaLinkedin, FaBehance, FaEnvelope } from 'react-icons/fa';
 export const personalInfo = {
   name: "Syahreza", 
   greeting: "Hi all, I'm",
-  intro: "A passionate Full Stack Software Developer :) 🚀 having an experience of building Web and Mobile applications with JavaScript / Reactjs / Nodejs / React Native and some other cool libraries and frameworks.", 
-  resumeUrl: "https://bit.ly/cv_syahrezaadnan"
+  intro: "An M-shaped developer with deep expertise in AI production🤖 and full-stack development💻. I leverage PyTorch and TensorFlow to build computer vision solutions and tune LLMs, deploying them into robust web applications using React, Node.js, and FastAPI, and into mobile apps using Flutter.", 
+  resumeUrl: "https://drive.google.com/uc?export=download&id=1u9Ldda2RjSBDoBVdjQiWhthxl8JovzBD"
 };
 
 export const socialLinks = [
