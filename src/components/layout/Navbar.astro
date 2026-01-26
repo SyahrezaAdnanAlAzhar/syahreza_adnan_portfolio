@@ -1,0 +1,574 @@
+---
+// Get base URL for proper routing
+const base = import.meta.env.BASE_URL;
+
+interface NavLink {
+  name: string;
+  href: string;
+}
+
+const navLinks: NavLink[] = [
+  { name: 'Home', href: `${base}` },
+  { name: 'Experience', href: `${base}#experience` },
+  { name: 'Tech Stack', href: `${base}#tech-stack` },
+  { name: 'Projects', href: `${base}#projects` },
+  { name: 'Award', href: `${base}#awards` },
+  { name: 'Contact', href: `${base}#contact` },
+];
+
+// Get current path for active link styling
+const currentPath = Astro.url.pathname;
+---
+
+<!-- Dynamic Island Navbar -->
+<nav 
+  id="dynamic-navbar" 
+  class="dynamic-navbar"
+  aria-label="Main navigation"
+>
+  <div class="navbar-container">
+    <!-- Profile Picture (animated from hero) -->
+    <div class="navbar-profile" id="navbarProfile">
+      <img 
+        src={`${import.meta.env.BASE_URL}/images/profile_picture.jpg`}
+        alt="Syahreza Adnan"
+        class="profile-img"
+        loading="eager"
+      />
+    </div>
+
+    <!-- Name -->
+    <span class="navbar-name" id="navbarName">Syahreza</span>
+
+    <!-- Desktop Navigation Links -->
+    <div class="navbar-links">
+      {navLinks.map(link => (
+        <a 
+          href={link.href}
+          class={`nav-link ${
+            currentPath === link.href || currentPath === link.href + '/' 
+              ? 'active' 
+              : ''
+          }`}
+        >
+          {link.name}
+        </a>
+      ))}
+    </div>
+
+    <!-- Mobile Hamburger -->
+    <button 
+      class="hamburger-btn"
+      id="hamburgerBtn"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+    >
+      <span class="hamburger-line line-1"></span>
+      <span class="hamburger-line line-2"></span>
+      <span class="hamburger-line line-3"></span>
+    </button>
+
+    <!-- Mobile Menu Dropdown (inside container) -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu-links">
+        {navLinks.map(link => (
+          <a 
+            href={link.href}
+            class={`mobile-nav-link ${
+              currentPath === link.href || currentPath === link.href + '/' 
+                ? 'active' 
+                : ''
+            }`}
+          >
+            {link.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .dynamic-navbar {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.4s ease, visibility 0.4s ease, top 0.4s ease;
+  }
+
+  .dynamic-navbar.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .navbar-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 0.75rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    width: fit-content;
+  }
+
+  .navbar-profile {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .navbar-profile.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .navbar-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #000000;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    white-space: nowrap;
+  }
+
+  .navbar-name.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .navbar-links {
+    display: none;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .nav-link {
+    font-family: 'Quantico', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: #000000;
+    padding: 0.375rem 0.75rem;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: #f97316;
+    font-weight: 700;
+  }
+
+  .hamburger-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 2rem;
+    height: 2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 6px;
+    transition: background 0.3s ease;
+  }
+
+  .hamburger-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .hamburger-line {
+    display: block;
+    width: 1.25rem;
+    height: 2px;
+    background-color: #000000;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+
+  /* Hamburger to X animation */
+  .hamburger-btn.open .line-1 {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .hamburger-btn.open .line-2 {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  .hamburger-btn.open .line-3 {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Mobile Menu */
+  .mobile-menu {
+    display: none;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .mobile-menu.open {
+    display: block;
+    max-height: 300px;
+  }
+
+  .mobile-menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 0.5rem;
+  }
+
+  .mobile-nav-link {
+    font-family: 'Quantico', sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    color: #000000;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .mobile-nav-link:hover,
+  .mobile-nav-link.active {
+    color: #f97316;
+    font-weight: 700;
+    background: rgba(249, 115, 22, 0.1);
+  }
+
+  /* Responsive - Mobile positioning */
+  @media (max-width: 767px) {
+    .dynamic-navbar {
+      top: 0.75rem;
+      right: 0.75rem;
+      left: auto;
+      transform: none;
+    }
+
+    .navbar-container {
+      flex-direction: row;
+      justify-content: space-around;
+      padding: 0.5rem 0.75rem;
+      gap: 0;
+      border-radius: 50px;
+      width: 220px;
+    }
+
+    .navbar-container.menu-expanded {
+      border-radius: 20px;
+      padding-bottom: 0.75rem;
+    }
+
+    .navbar-profile {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .navbar-name {
+      font-size: 0.875rem;
+    }
+
+    .navbar-links {
+      display: none !important;
+    }
+  }
+
+  /* Tablet and Desktop */
+  @media (min-width: 768px) {
+    .dynamic-navbar {
+      top: 1.25rem;
+    }
+
+    .navbar-container {
+      padding: 0.5rem 1.25rem;
+      gap: 1rem;
+    }
+
+    .navbar-profile {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .navbar-name {
+      font-size: 1.125rem;
+    }
+
+    .navbar-links {
+      display: flex;
+    }
+
+    .hamburger-btn {
+      display: none;
+    }
+
+    .mobile-menu {
+      display: none;
+    }
+  }
+
+  /* Large Desktop */
+  @media (min-width: 1024px) {
+    .navbar-container {
+      gap: 1.25rem;
+      padding: 0.625rem 1.5rem;
+    }
+
+    .nav-link {
+      font-size: 0.9375rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initDynamicNavbar() {
+    const navbar = document.getElementById('dynamic-navbar');
+    const navbarProfile = document.getElementById('navbarProfile');
+    const navbarName = document.getElementById('navbarName');
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const heroProfile = document.querySelector('.hero-profile');
+    const heroText = document.querySelector('.hero-text h1');
+
+    if (!navbar || !navbarProfile || !navbarName) return;
+
+    let isNavbarVisible = false;
+    let isMenuOpen = false;
+    let currentActiveSection = '';
+
+    // Section IDs to observe
+    const sectionIds = ['experience', 'tech-stack', 'projects', 'awards', 'contact'];
+    const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+
+    // Intersection Observer for section detection
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -60% 0px', // Trigger when section is in the middle of viewport
+      threshold: 0
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id;
+          updateActiveNavLink(sectionId);
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections
+    sections.forEach(section => {
+      sectionObserver.observe(section);
+    });
+
+    // Function to update active nav link
+    function updateActiveNavLink(sectionId: string) {
+      if (currentActiveSection === sectionId) return;
+      currentActiveSection = sectionId;
+
+      // Update desktop nav links
+      const navLinks = navbar?.querySelectorAll('.nav-link');
+      navLinks?.forEach(link => {
+        const href = link.getAttribute('href') || '';
+        link.classList.remove('active');
+        
+        // Check if href matches the section
+        if (href.includes(`#${sectionId}`)) {
+          link.classList.add('active');
+        }
+      });
+
+      // Update mobile nav links
+      const mobileNavLinks = mobileMenu?.querySelectorAll('.mobile-nav-link');
+      mobileNavLinks?.forEach(link => {
+        const href = link.getAttribute('href') || '';
+        link.classList.remove('active');
+        
+        if (href.includes(`#${sectionId}`)) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    // Handle home section (when at top)
+    function checkHomeSection() {
+      const scrollY = window.scrollY;
+      if (scrollY < 100) {
+        currentActiveSection = '';
+        const navLinks = navbar?.querySelectorAll('.nav-link, .mobile-nav-link');
+        navLinks?.forEach(link => {
+          const href = link.getAttribute('href') || '';
+          link.classList.remove('active');
+          // Activate home link
+          if (!href.includes('#')) {
+            link.classList.add('active');
+          }
+        });
+      }
+    }
+
+    // Hamburger toggle
+    if (hamburgerBtn && mobileMenu) {
+      const navbarContainer = navbar.querySelector('.navbar-container');
+      
+      hamburgerBtn.addEventListener('click', () => {
+        isMenuOpen = !isMenuOpen;
+        hamburgerBtn.classList.toggle('open', isMenuOpen);
+        mobileMenu.classList.toggle('open', isMenuOpen);
+        navbarContainer?.classList.toggle('menu-expanded', isMenuOpen);
+        hamburgerBtn.setAttribute('aria-expanded', isMenuOpen.toString());
+      });
+
+      // Close menu when clicking a link
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          isMenuOpen = false;
+          hamburgerBtn.classList.remove('open');
+          mobileMenu.classList.remove('open');
+          navbarContainer?.classList.remove('menu-expanded');
+          hamburgerBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
+    // Calculate when hero section ends
+    function getHeroTriggerPoint(): number {
+      if (heroProfile) {
+        const rect = heroProfile.getBoundingClientRect();
+        const profileBottom = rect.bottom + window.scrollY;
+        return profileBottom - 100; // Trigger slightly before profile vanishes
+      }
+      return window.innerHeight * 0.4;
+    }
+
+    // Show/hide navbar based on scroll
+    function updateNavbarVisibility() {
+      if (!navbar || !navbarProfile || !navbarName) return;
+      
+      const scrollY = window.scrollY;
+      const triggerPoint = getHeroTriggerPoint();
+
+      if (scrollY > triggerPoint && !isNavbarVisible) {
+        isNavbarVisible = true;
+        navbar.classList.add('visible');
+        
+        // Animate profile and name appearance
+        gsap.to(navbarProfile, {
+          scale: 1,
+          opacity: 1,
+          duration: 0.5,
+          ease: 'back.out(1.7)',
+          onStart: () => navbarProfile!.classList.add('visible')
+        });
+
+        gsap.to(navbarName, {
+          x: 0,
+          opacity: 1,
+          duration: 0.4,
+          delay: 0.15,
+          ease: 'power2.out',
+          onStart: () => navbarName!.classList.add('visible')
+        });
+
+      } else if (scrollY <= triggerPoint && isNavbarVisible) {
+        isNavbarVisible = false;
+        
+        // Animate out
+        gsap.to(navbarProfile, {
+          scale: 0,
+          opacity: 0,
+          duration: 0.3,
+          ease: 'power2.in',
+          onComplete: () => navbarProfile!.classList.remove('visible')
+        });
+
+        gsap.to(navbarName, {
+          x: -10,
+          opacity: 0,
+          duration: 0.25,
+          ease: 'power2.in',
+          onComplete: () => navbarName!.classList.remove('visible')
+        });
+
+        setTimeout(() => {
+          if (!isNavbarVisible && navbar) {
+            navbar.classList.remove('visible');
+          }
+        }, 350);
+      }
+    }
+
+    // Throttled scroll handler
+    let ticking = false;
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateNavbarVisibility();
+          checkHomeSection();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    
+    // Initial check
+    updateNavbarVisibility();
+    checkHomeSection();
+
+    // Handle resize
+    window.addEventListener('resize', () => {
+      updateNavbarVisibility();
+    });
+  }
+
+  // Initialize on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDynamicNavbar);
+  } else {
+    initDynamicNavbar();
+  }
+
+  // Re-initialize on Astro navigation
+  document.addEventListener('astro:page-load', initDynamicNavbar);
+</script>

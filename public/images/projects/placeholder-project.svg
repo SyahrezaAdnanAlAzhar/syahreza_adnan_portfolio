@@ -1,0 +1,6 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#1a1a1a"/>
+  <text x="600" y="290" font-family="Arial, sans-serif" font-size="32" fill="#FFE61F" text-anchor="middle" font-weight="bold">PROJECT</text>
+  <text x="600" y="340" font-family="Arial, sans-serif" font-size="28" fill="#FF991C" text-anchor="middle">SCREENSHOT</text>
+  <text x="600" y="390" font-family="Arial, sans-serif" font-size="18" fill="#999" text-anchor="middle">Replace with real project image</text>
+</svg>

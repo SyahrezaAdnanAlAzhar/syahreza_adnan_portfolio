@@ -1,0 +1,77 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div class={`connector-line-wrapper relative flex justify-center my-8 md:my-12 ${className}`}>
+  <div 
+    class="connector-line w-0.5 h-16 md:h-24 bg-linear-to-b from-transparent via-(--color-primary) to-transparent"
+    data-connector-line
+  >
+  </div>
+</div>
+
+<script>
+  import gsap from 'gsap';
+  import ScrollTrigger from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initConnectorLines() {
+    const isMobile = window.innerWidth < 768;
+    const connectorLines = document.querySelectorAll('[data-connector-line]');
+
+    connectorLines.forEach((line) => {
+      if (isMobile) {
+        // Mobile: Direct 100% opacity (no animation)
+        gsap.set(line, { opacity: 1 });
+      } else {
+        // Desktop/Tablet: Light saber effect (0% → 100% on scroll)
+        gsap.fromTo(
+          line,
+          { opacity: 0 },
+          {
+            opacity: 1,
+            duration: 0.8,
+            ease: 'power2.inOut',
+            scrollTrigger: {
+              trigger: line,
+              start: 'top 80%',
+              end: 'top 50%',
+              scrub: 1,
+            },
+          }
+        );
+      }
+    });
+  }
+
+  // Initialize on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initConnectorLines);
+  } else {
+    initConnectorLines();
+  }
+
+  // Re-initialize on navigation
+  document.addEventListener('astro:page-load', initConnectorLines);
+
+  // Handle window resize
+  let resizeTimeout: NodeJS.Timeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      ScrollTrigger.refresh();
+      initConnectorLines();
+    }, 250);
+  });
+</script>
+
+<style>
+  .connector-line {
+    transition: opacity 0.5s ease;
+  }
+</style>

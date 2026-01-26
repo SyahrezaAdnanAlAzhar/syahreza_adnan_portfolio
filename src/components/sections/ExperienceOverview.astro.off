@@ -1,0 +1,467 @@
+---
+import { getCollection } from 'astro:content';
+import SectionHeading from '../ui/SectionHeading.astro';
+import ExperienceCard from '../cards/ExperienceCard.astro';
+
+const base = import.meta.env.BASE_URL;
+
+// Get all experiences and sort by order
+const experiences = (await getCollection('experiences'))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<section class="experience-section py-16">
+  <div class="experience-container">
+    <SectionHeading 
+      title="Work Experience"
+      detailLink={`${base}experience`}
+      showDetailButton={true}
+    />
+
+    <!-- Carousel Container -->
+    <div class="carousel-wrapper" id="carouselWrapper">
+      <!-- Left Shadow Overlay (15% width) -->
+      <div class="carousel-shadow carousel-shadow-left"></div>
+      
+      <div class="carousel-track" id="experienceCarousel">
+        {/* Triple the cards for infinite scroll effect */}
+        {[...experiences, ...experiences, ...experiences].map((exp, index) => (
+          <div class="carousel-item" data-index={index % experiences.length}>
+            <ExperienceCard
+              title={exp.data.title}
+              company={exp.data.company}
+              location={exp.data.location}
+              startDate={exp.data.startDate}
+              endDate={exp.data.endDate}
+              image={exp.data.image}
+              techStack={exp.data.techStack}
+              isRemote={exp.data.isRemote}
+            />
+          </div>
+        ))}
+      </div>
+      
+      <!-- Right Shadow Overlay (15% width) -->
+      <div class="carousel-shadow carousel-shadow-right"></div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="carousel-controls">
+      <!-- Arrow Left -->
+      <button class="carousel-arrow carousel-arrow-left" id="carouselPrev" aria-label="Previous slide">
+        <svg class="carousel-arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+
+      <!-- Dots -->
+      <div class="carousel-dots" id="carouselDots">
+        {experiences.map((_, index) => (
+          <button 
+            class={`carousel-dot ${index === 0 ? 'active' : ''}`}
+            data-index={index}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
+
+      <!-- Arrow Right -->
+      <button class="carousel-arrow carousel-arrow-right" id="carouselNext" aria-label="Next slide">
+        <svg class="carousel-arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .experience-section {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .experience-container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .carousel-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 2rem 0;
+    cursor: grab;
+    margin: 0 auto;
+  }
+
+  .carousel-wrapper:active {
+    cursor: grabbing;
+  }
+
+  /* Inner shadow overlays - 15% width each side */
+  .carousel-shadow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 30%;
+    z-index: 10;
+    pointer-events: none;
+    /* Vertical mask: 10% opacity at top/bottom edges, 100% in middle */
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 1) 10%,
+      rgba(0, 0, 0, 1) 90%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 1) 10%,
+      rgba(0, 0, 0, 1) 90%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+
+  .carousel-shadow-left {
+    left: 0;
+    background: linear-gradient(to right, var(--color-background, #000000) 0%, color-mix(in srgb, var(--color-background, #000000) 70%, transparent) 30%, transparent 100%);
+  }
+
+  .carousel-shadow-right {
+    right: 0;
+    background: linear-gradient(to left, var(--color-background, #000000) 0%, color-mix(in srgb, var(--color-background, #000000) 70%, transparent) 30%, transparent 100%);
+  }
+
+  /* Arrow icon sizing - scoped alternative to Tailwind w-5 h-5 */
+  .carousel-arrow-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .carousel-track {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    will-change: transform;
+  }
+
+  .carousel-item {
+    flex-shrink: 0;
+  }
+
+  /* Navigation Controls */
+  .carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .carousel-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .carousel-arrow:hover {
+    background-color: var(--color-primary);
+    color: var(--color-background, #000000);
+  }
+
+  .carousel-dots {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .carousel-dot {
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 50%;
+    background-color: color-mix(in srgb, var(--color-text, #ffffff) 30%, transparent);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  .carousel-dot:hover {
+    background-color: color-mix(in srgb, var(--color-text, #ffffff) 50%, transparent);
+  }
+
+  .carousel-dot.active {
+    background-color: var(--color-primary);
+    transform: scale(1.2);
+  }
+
+  /* Responsive */
+  @media (min-width: 640px) {
+    .carousel-track {
+      gap: 1.5rem;
+    }
+
+    .carousel-arrow {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .carousel-dot {
+      width: 0.75rem;
+      height: 0.75rem;
+    }
+
+    .carousel-dots {
+      gap: 0.625rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .carousel-track {
+      gap: 2rem;
+    }
+  }
+</style>
+
+<script>
+  function initExperienceCarousel() {
+    const wrapper = document.getElementById('carouselWrapper') as HTMLElement;
+    const track = document.getElementById('experienceCarousel') as HTMLElement;
+    const prevBtn = document.getElementById('carouselPrev') as HTMLButtonElement;
+    const nextBtn = document.getElementById('carouselNext') as HTMLButtonElement;
+    const dotsContainer = document.getElementById('carouselDots') as HTMLElement;
+    
+    if (!track || !prevBtn || !nextBtn || !dotsContainer || !wrapper) return;
+
+    const items = track.querySelectorAll('.carousel-item');
+    const dots = dotsContainer.querySelectorAll('.carousel-dot');
+    const totalOriginal = dots.length;
+    
+    let currentIndex = totalOriginal; // Start at first item of middle set
+    let isDragging = false;
+    let startX = 0;
+    let currentTranslate = 0;
+    let prevTranslate = 0;
+    let autoPlayInterval: ReturnType<typeof setInterval> | null = null;
+
+    // Get gap based on viewport
+    function getGap(): number {
+      if (window.innerWidth >= 1024) return 32;
+      if (window.innerWidth >= 640) return 24;
+      return 16;
+    }
+
+    // Get card width including gap
+    function getCardWidth(): number {
+      const item = items[0] as HTMLElement;
+      return item.offsetWidth + getGap();
+    }
+
+    // Update dots only (no card scaling/opacity changes)
+    function updateDots() {
+      const normalizedIndex = ((currentIndex % totalOriginal) + totalOriginal) % totalOriginal;
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === normalizedIndex);
+      });
+    }
+
+    // Calculate center offset to position current card in the middle
+    function getCenterOffset(): number {
+      const cardWidth = (items[0] as HTMLElement).offsetWidth;
+      return (wrapper.offsetWidth - cardWidth) / 2;
+    }
+
+    // Set position without animation
+    function setPositionInstant() {
+      track.style.transition = 'none';
+      const cardWidth = getCardWidth();
+      const offset = getCenterOffset();
+      currentTranslate = -currentIndex * cardWidth + offset;
+      track.style.transform = `translateX(${currentTranslate}px)`;
+      prevTranslate = currentTranslate;
+      void track.offsetHeight; // Force reflow
+    }
+
+    // Set position with animation
+    function setPositionAnimated() {
+      track.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+      const cardWidth = getCardWidth();
+      const offset = getCenterOffset();
+      currentTranslate = -currentIndex * cardWidth + offset;
+      track.style.transform = `translateX(${currentTranslate}px)`;
+      prevTranslate = currentTranslate;
+    }
+
+    // Handle infinite loop - check and reset seamlessly after transition
+    function handleInfiniteLoop() {
+      // When past the end of middle set
+      if (currentIndex >= totalOriginal * 2) {
+        currentIndex = currentIndex - totalOriginal;
+        setPositionInstant();
+      } 
+      // When before the start of middle set
+      else if (currentIndex < totalOriginal) {
+        currentIndex = currentIndex + totalOriginal;
+        setPositionInstant();
+      }
+    }
+
+    // Listen for transition end to handle infinite loop
+    track.addEventListener('transitionend', () => {
+      handleInfiniteLoop();
+    });
+
+    // Go to specific slide
+    function goToSlide(index: number) {
+      const normalizedCurrent = ((currentIndex % totalOriginal) + totalOriginal) % totalOriginal;
+      const diff = index - normalizedCurrent;
+      currentIndex = currentIndex + diff;
+      setPositionAnimated();
+      updateDots();
+    }
+
+    // Next slide
+    function nextSlide() {
+      currentIndex++;
+      setPositionAnimated();
+      updateDots();
+    }
+
+    // Previous slide
+    function prevSlide() {
+      currentIndex--;
+      setPositionAnimated();
+      updateDots();
+    }
+
+    // Auto play
+    function startAutoPlay() {
+      stopAutoPlay();
+      autoPlayInterval = setInterval(nextSlide, 3000);
+    }
+
+    function stopAutoPlay() {
+      if (autoPlayInterval) {
+        clearInterval(autoPlayInterval);
+        autoPlayInterval = null;
+      }
+    }
+
+    // Drag handlers
+    function touchStart(e: TouchEvent | MouseEvent) {
+      isDragging = true;
+      startX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+      track.style.transition = 'none';
+      stopAutoPlay();
+    }
+
+    function touchMove(e: TouchEvent | MouseEvent) {
+      if (!isDragging) return;
+      const currentX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+      const diff = currentX - startX;
+      currentTranslate = prevTranslate + diff;
+      track.style.transform = `translateX(${currentTranslate}px)`;
+    }
+
+    function touchEnd() {
+      if (!isDragging) return;
+      isDragging = false;
+
+      const cardWidth = getCardWidth();
+      const movedBy = currentTranslate - prevTranslate;
+
+      if (Math.abs(movedBy) > cardWidth / 4) {
+        if (movedBy < 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      } else {
+        setPositionAnimated();
+      }
+
+      startAutoPlay();
+    }
+
+    // Event listeners
+    prevBtn.addEventListener('click', () => {
+      prevSlide();
+      stopAutoPlay();
+      startAutoPlay();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      nextSlide();
+      stopAutoPlay();
+      startAutoPlay();
+    });
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        goToSlide(index);
+        stopAutoPlay();
+        startAutoPlay();
+      });
+    });
+
+    // Touch events
+    wrapper.addEventListener('touchstart', touchStart, { passive: true });
+    wrapper.addEventListener('touchmove', touchMove, { passive: true });
+    wrapper.addEventListener('touchend', touchEnd);
+
+    // Mouse events
+    wrapper.addEventListener('mousedown', touchStart);
+    window.addEventListener('mousemove', (e) => {
+      if (isDragging) touchMove(e);
+    });
+    window.addEventListener('mouseup', () => {
+      if (isDragging) touchEnd();
+    });
+
+    // Prevent drag on images
+    track.querySelectorAll('img').forEach(img => {
+      img.addEventListener('dragstart', (e) => e.preventDefault());
+    });
+
+    // Handle resize
+    let resizeTimeout: ReturnType<typeof setTimeout>;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        setPositionInstant();
+      }, 100);
+    });
+
+    // Initialize
+    setPositionInstant();
+    updateDots();
+    startAutoPlay();
+
+    // Pause on hover
+    wrapper.addEventListener('mouseenter', stopAutoPlay);
+    wrapper.addEventListener('mouseleave', () => {
+      if (!isDragging) startAutoPlay();
+    });
+  }
+
+  // Initialize on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initExperienceCarousel);
+  } else {
+    initExperienceCarousel();
+  }
+
+  // Re-initialize on Astro navigation
+  document.addEventListener('astro:page-load', initExperienceCarousel);
+</script>

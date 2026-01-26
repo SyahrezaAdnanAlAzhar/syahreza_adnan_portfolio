@@ -1,0 +1,115 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import ExpandableCard from '../components/cards/ExpandableCard.astro';
+import ConnectorLine from '../components/ui/ConnectorLine.astro';
+
+// Get all experiences sorted by order and render them
+const experiencesData = (await getCollection('experiences'))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const experiences = await Promise.all(
+  experiencesData.map(async (exp) => ({
+    ...exp,
+    Content: (await exp.render()).Content
+  }))
+);
+---
+
+<Layout 
+  title="Work Experience - Syahreza Adnan"
+  description="Explore my professional work experience in AI Engineering, Full Stack Development, and Software Engineering."
+>
+  <main class="min-h-screen py-24 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <!-- Page Header -->
+      <div class="text-center mb-16">
+        <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-glow-yellow mb-4">
+          Work Experience
+        </h1>
+        <p class="text-lg text-white/70 max-w-2xl mx-auto">
+          My professional journey in software development, AI engineering, and technology consulting.
+        </p>
+      </div>
+
+      <!-- Experiences Timeline -->
+      <div class="space-y-8">
+        {experiences.map((exp, index) => (
+          <div class="relative">
+            <ExpandableCard id={`exp-${exp.id}`} defaultExpanded={index === 0}>
+              <!-- Header Slot -->
+              <div slot="header" class="flex flex-col sm:flex-row gap-4 w-full">
+                <!-- Company Logo -->
+                <div class="shrink-0">
+                  <img 
+                    src={`/${exp.data.image}`} 
+                    alt={`${exp.data.company} logo`}
+                    class="w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-lg bg-white/5 p-2"
+                    loading="lazy"
+                  />
+                </div>
+
+                <!-- Header Info -->
+                <div class="flex-1 space-y-2">
+                  <h3 class="font-heading text-xl md:text-2xl font-semibold" style="color: var(--color-primary);">
+                    {exp.data.title}
+                  </h3>
+                  <p class="text-white font-medium">
+                    {exp.data.company}
+                  </p>
+                  <div class="flex flex-wrap items-center gap-3 text-sm text-white/70">
+                    <span class="flex items-center gap-1">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                      </svg>
+                      {exp.data.location}
+                      {exp.data.isRemote && <span class="text-(--color-accent)">(Remote)</span>}
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                      </svg>
+                      {exp.data.startDate} - {exp.data.endDate || 'Present'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Content Slot -->
+              <div slot="content" class="space-y-6">
+                <!-- Description -->
+                <div class="prose prose-invert prose-lg max-w-none">
+                  <exp.Content />
+                </div>
+
+                <!-- Tech Stack -->
+                {exp.data.techStack && exp.data.techStack.length > 0 && (
+                  <div>
+                    <h4 class="font-heading text-lg font-semibold mb-3" style="color: var(--color-accent);">
+                      Technologies Used
+                    </h4>
+                    <div class="flex flex-wrap gap-2">
+                      {exp.data.techStack.map(tech => (
+                        <span class="px-3 py-1 text-sm rounded-full bg-(--color-primary)/10 border border-(--color-primary)/30 text-(--color-primary)">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </ExpandableCard>
+
+            <!-- Connector Line (not for last item) -->
+            {index < experiences.length - 1 && (
+              <div class="flex justify-center my-6">
+                <ConnectorLine />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </main>
+</Layout>

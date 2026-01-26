@@ -1,0 +1,840 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+
+// EmailJS config from environment variables
+const emailjsPublicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
+const emailjsServiceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID;
+const emailjsTemplateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
+
+// Social media links
+const socialLinks = [
+  {
+    name: 'LinkedIn',
+    url: 'https://www.linkedin.com/in/syahreza-adnan/',
+    icon: 'linkedin.svg',
+    iconHover: 'linkedin-revert.svg',
+    type: 'linkedin',
+  },
+  {
+    name: 'GitHub',
+    url: 'https://github.com/SyahrezaAdnanAlAzhar',
+    icon: 'github.svg',
+    iconHover: 'github-revert.svg',
+    type: 'github',
+  },
+  {
+    name: 'Instagram',
+    url: 'https://www.instagram.com/syahreza_adnan_/',
+    icon: 'instagram.svg',
+    iconHover: 'instagram.svg',
+    type: 'instagram',
+  },
+];
+
+// Obfuscated email parts (prevents simple bot crawlers)
+const emailParts = ['syahreza', '.', 'adnan29', '@', 'gmail', '.', 'com'];
+---
+
+<section id="contact" class="contact-section">
+  <div class="contact-container">
+    <!-- Top Spacer -->
+    <div class="section-spacer-top"></div>
+    
+    <SectionHeading 
+      title="Let's Connect"
+      showDetailButton={false}
+    />
+
+    <div class="contact-grid">
+      <!-- Social Media Section -->
+      <div class="social-section">
+        <!-- Profile Picture -->
+        <div class="profile-picture-wrapper">
+          <img 
+            src={`${import.meta.env.BASE_URL}/images/profile_picture.jpg`}
+            alt="Syahreza Adnan"
+            class="profile-picture"
+            loading="lazy"
+          />
+        </div>
+
+        <h3 class="section-subtitle">Get in Touch</h3>
+        <p class="section-description">Interested in working together or discussing new opportunities? Let's connect and start the conversation.</p>
+        
+        <!-- Email Card -->
+        <div class="social-card email-card" data-card-type="email">
+          <div class="social-icon-wrapper email-icon">
+            <img 
+              src={`${import.meta.env.BASE_URL}/images/contacts/gmail.svg`}
+              alt="Email"
+              class="social-icon"
+              loading="lazy"
+            />
+          </div>
+          <div class="social-info">
+            <div class="email-row">
+              <a 
+                href="#" 
+                class="social-link email-link"
+                data-email-parts={JSON.stringify(emailParts)}
+              >
+                <span class="email-text">Loading...</span>
+              </a>
+              <button 
+                class="copy-btn" 
+                title="Copy email address"
+                aria-label="Copy email address"
+              >
+                <span class="material-icons-round">content_copy</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Media Cards -->
+        {socialLinks.map(social => (
+          <a 
+            href={social.url} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="social-card"
+            data-card-type={social.type}
+          >
+            <div class="social-icon-wrapper">
+              <img 
+                src={`${import.meta.env.BASE_URL}/images/contacts/${social.icon}`}
+                alt={social.name}
+                class="social-icon icon-default"
+                loading="lazy"
+              />
+              <img 
+                src={`${import.meta.env.BASE_URL}/images/contacts/${social.iconHover}`}
+                alt={social.name}
+                class="social-icon icon-hover"
+                loading="lazy"
+              />
+            </div>
+            <span class="social-name">{social.name}</span>
+            <span class="material-icons-round arrow-icon">arrow_forward</span>
+          </a>
+        ))}
+      </div>
+
+      <!-- Email Form Section -->
+      <div class="form-section">
+        <div class="form-header">
+          <span class="material-icons-round">chat</span>
+          <h3>Send a Message</h3>
+        </div>
+        
+        <form id="contact-form" class="contact-form">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              placeholder="Your name"
+              required
+            />
+            <span class="error-message"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="from_email" 
+              placeholder="your.email@example.com"
+              required
+            />
+            <span class="error-message"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input 
+              type="text" 
+              id="subject" 
+              name="subject" 
+              placeholder="What's this about?"
+              required
+            />
+            <span class="error-message"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea 
+              id="message" 
+              name="message" 
+              placeholder="Your message..."
+              rows="5"
+              required
+            ></textarea>
+            <span class="error-message"></span>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submit-btn">
+            <span class="material-icons-round">send</span>
+            <span class="btn-text">Send Message</span>
+            <span class="loading-spinner"></span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast" role="alert" aria-live="polite">
+      <span class="toast-icon material-icons-round"></span>
+      <span class="toast-message"></span>
+    </div>
+
+    <!-- Bottom Spacer -->
+    <div class="section-spacer-bottom"></div>
+  </div>
+</section>
+
+<!-- Hidden data for JavaScript -->
+<script 
+  id="emailjs-config" 
+  type="application/json"
+  data-public-key={emailjsPublicKey}
+  data-service-id={emailjsServiceId}
+  data-template-id={emailjsTemplateId}
+></script>
+
+<style>
+  .contact-section {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .contact-container {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* Spacers */
+  .section-spacer-top {
+    height: 4.5rem;
+  }
+
+  .section-spacer-bottom {
+    height: 4rem;
+  }
+
+  /* Grid Layout */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 3rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  /* Social Section */
+  .social-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* Profile Picture */
+  .profile-picture-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .section-subtitle {
+    font-family: var(--font-heading), sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: black;
+    margin-bottom: 0;
+    text-align: center;
+  }
+
+  .section-description {
+    font-size: 0.9rem;
+    color: black;
+    line-height: 1.6;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Social Cards */
+  .social-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: white;
+    border: 2px solid;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  /* Card border colors */
+  .social-card[data-card-type="email"] {
+    border-color: #f97316;
+  }
+
+  .social-card[data-card-type="linkedin"] {
+    border-color: #007EBB;
+  }
+
+  .social-card[data-card-type="github"] {
+    border-color: #1B1F23;
+  }
+
+  .social-card[data-card-type="instagram"] {
+    border-color: #FF005F;
+  }
+
+  /* Card hover behavior */
+  .social-card:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0px 4px 0px 0px rgba(0, 0, 0, 1);
+  }
+
+  .social-card[data-card-type="email"]:hover {
+    background: #f97316;
+    border-color: #f97316;
+  }
+
+  .social-card[data-card-type="linkedin"]:hover {
+    background: #007EBB;
+    border-color: #007EBB;
+  }
+
+  .social-card[data-card-type="github"]:hover {
+    background: #1B1F23;
+    border-color: #1B1F23;
+  }
+
+  .social-card[data-card-type="instagram"]:hover {
+    background: #FF005F;
+    border-color: #FF005F;
+  }
+
+  .social-card:hover .social-name,
+  .social-card:hover .email-link,
+  .social-card:hover .arrow-icon {
+    color: white;
+  }
+
+  .social-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: transparent;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .social-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .icon-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .social-card:hover .icon-default {
+    opacity: 0;
+  }
+
+  .social-card:hover .icon-hover {
+    opacity: 1;
+  }
+
+  .social-name {
+    flex: 1;
+    font-size: 1rem;
+    font-weight: 500;
+    color: black;
+    transition: color 0.3s ease;
+  }
+
+  .arrow-icon {
+    color: black;
+    font-size: 1.25rem;
+    transition: color 0.3s ease;
+  }
+
+  /* Email Card */
+  .email-card {
+    flex-direction: row;
+    cursor: default;
+  }
+
+  .social-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .social-label {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .email-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .email-link {
+    color: black;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .copy-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.35rem;
+    background: rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 0.375rem;
+    color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .copy-btn:hover {
+    background: rgba(0, 0, 0, 0.2);
+    color: black;
+  }
+
+  .social-card:hover .copy-btn {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+  }
+
+  .social-card:hover .copy-btn:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .copy-btn .material-icons-round {
+    font-size: 1rem;
+  }
+
+  .copy-btn.copied {
+    background: rgba(34, 197, 94, 0.2);
+    color: rgb(34, 197, 94);
+  }
+
+  /* Form Section */
+  .form-section {
+    background: #3b82f6;
+    border-radius: 1rem;
+    padding: 2rem;
+  }
+
+  .form-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-header .material-icons-round {
+    font-size: 1.5rem;
+    color: rgb(165, 180, 252);
+  }
+
+  .form-header h3 {
+    font-family: var(--font-heading), sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+  }
+
+  /* Form Styles */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: white;
+    border: none;
+    border-radius: 0.5rem;
+    color: black;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  /* Error States */
+  .form-group.error input,
+  .form-group.error textarea {
+    box-shadow: 0 0 0 2px rgb(239, 68, 68);
+  }
+
+  .form-group.error input:focus,
+  .form-group.error textarea:focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+  }
+
+  .error-message {
+    font-size: 0.75rem;
+    color: rgb(239, 68, 68);
+    min-height: 1rem;
+    display: none;
+  }
+
+  .form-group.error .error-message {
+    display: block;
+  }
+
+  /* Submit Button */
+  .submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: #f59e0b;
+    border: 2px solid white;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+  }
+
+  .submit-btn:hover:not(:disabled) {
+    transform: translateY(-8px) !important;
+    box-shadow: 0px 4px 0px 0px rgba(0, 0, 0, 1);
+    border-color: #f59e0b;
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .submit-btn .material-icons-round {
+    font-size: 1.25rem;
+  }
+
+  .loading-spinner {
+    display: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  .submit-btn.loading .material-icons-round,
+  .submit-btn.loading .btn-text {
+    display: none;
+  }
+
+  .submit-btn.loading .loading-spinner {
+    display: block;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Toast Notification */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    background: rgba(30, 30, 30, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    z-index: 1000;
+  }
+
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .toast.success {
+    border-color: rgba(34, 197, 94, 0.3);
+  }
+
+  .toast.success .toast-icon {
+    color: rgb(34, 197, 94);
+  }
+
+  .toast.error {
+    border-color: rgba(239, 68, 68, 0.3);
+  }
+
+  .toast.error .toast-icon {
+    color: rgb(239, 68, 68);
+  }
+
+  .toast-message {
+    color: white;
+    font-size: 0.95rem;
+  }
+
+  /* Mobile Adjustments */
+  @media (max-width: 639px) {
+    .contact-container {
+      padding: 0 1rem;
+    }
+
+    .form-section {
+      padding: 1.5rem;
+    }
+
+    .submit-btn {
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  import emailjs from '@emailjs/browser';
+
+  function initContactSection() {
+    // Get EmailJS config
+    const configEl = document.getElementById('emailjs-config');
+    if (!configEl) return;
+
+    const publicKey = configEl.getAttribute('data-public-key');
+    const serviceId = configEl.getAttribute('data-service-id');
+    const templateId = configEl.getAttribute('data-template-id');
+
+    // Initialize EmailJS
+    if (publicKey) {
+      emailjs.init(publicKey);
+    }
+
+    // Reconstruct and display email (anti-bot)
+    const emailLink = document.querySelector('.email-link') as HTMLAnchorElement;
+    const emailTextEl = emailLink?.querySelector('.email-text');
+    if (emailLink && emailTextEl) {
+      const parts = JSON.parse(emailLink.dataset.emailParts || '[]');
+      const email = parts.join('');
+      emailTextEl.textContent = email;
+      emailLink.href = `mailto:${email}`;
+    }
+
+    // Copy email button
+    const copyBtn = document.querySelector('.copy-btn');
+    if (copyBtn && emailLink) {
+      copyBtn.addEventListener('click', async () => {
+        const parts = JSON.parse(emailLink.dataset.emailParts || '[]');
+        const email = parts.join('');
+        
+        try {
+          await navigator.clipboard.writeText(email);
+          copyBtn.classList.add('copied');
+          const icon = copyBtn.querySelector('.material-icons-round');
+          if (icon) icon.textContent = 'check';
+          
+          setTimeout(() => {
+            copyBtn.classList.remove('copied');
+            if (icon) icon.textContent = 'content_copy';
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy:', err);
+        }
+      });
+    }
+
+    // Form handling
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const submitBtn = document.getElementById('submit-btn');
+
+    if (form && submitBtn) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Clear previous errors
+        form.querySelectorAll('.form-group').forEach(group => {
+          group.classList.remove('error');
+          const errorEl = group.querySelector('.error-message');
+          if (errorEl) errorEl.textContent = '';
+        });
+
+        // Validate form
+        let isValid = true;
+        const formData = new FormData(form);
+
+        // Name validation
+        const name = formData.get('name') as string;
+        if (!name || name.trim().length < 2) {
+          setError('name', 'Please enter your name (at least 2 characters)');
+          isValid = false;
+        }
+
+        // Email validation
+        const email = formData.get('from_email') as string;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email || !emailRegex.test(email)) {
+          setError('email', 'Please enter a valid email address');
+          isValid = false;
+        }
+
+        // Subject validation
+        const subject = formData.get('subject') as string;
+        if (!subject || subject.trim().length < 3) {
+          setError('subject', 'Please enter a subject (at least 3 characters)');
+          isValid = false;
+        }
+
+        // Message validation
+        const message = formData.get('message') as string;
+        if (!message || message.trim().length < 10) {
+          setError('message', 'Please enter a message (at least 10 characters)');
+          isValid = false;
+        }
+
+        if (!isValid) return;
+
+        // Show loading state
+        submitBtn.classList.add('loading');
+        submitBtn.setAttribute('disabled', 'true');
+
+        try {
+          if (!serviceId || !templateId) {
+            throw new Error('EmailJS configuration missing');
+          }
+
+          await emailjs.sendForm(serviceId, templateId, form);
+          
+          showToast('success', 'Message sent successfully! I\'ll get back to you soon.');
+          form.reset();
+        } catch (error) {
+          console.error('EmailJS error:', error);
+          showToast('error', 'Failed to send message. Please try again or email me directly.');
+        } finally {
+          submitBtn.classList.remove('loading');
+          submitBtn.removeAttribute('disabled');
+        }
+      });
+    }
+
+    function setError(fieldId: string, message: string) {
+      const field = document.getElementById(fieldId);
+      const group = field?.closest('.form-group');
+      if (group) {
+        group.classList.add('error');
+        const errorEl = group.querySelector('.error-message');
+        if (errorEl) errorEl.textContent = message;
+      }
+    }
+
+    function showToast(type: 'success' | 'error', message: string) {
+      const toast = document.getElementById('toast');
+      const icon = toast?.querySelector('.toast-icon');
+      const msgEl = toast?.querySelector('.toast-message');
+
+      if (toast && icon && msgEl) {
+        toast.className = 'toast ' + type;
+        icon.textContent = type === 'success' ? 'check_circle' : 'error';
+        msgEl.textContent = message;
+        toast.classList.add('show');
+
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 5000);
+      }
+    }
+  }
+
+  // Initialize on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initContactSection);
+  } else {
+    initContactSection();
+  }
+
+  document.addEventListener('astro:page-load', initContactSection);
+</script>

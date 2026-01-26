@@ -1,0 +1,33 @@
+---
+interface Props {
+  class?: string;
+  noPadding?: boolean;
+  glow?: boolean;
+}
+
+const { 
+  class: className = '', 
+  noPadding = false,
+  glow = true 
+} = Astro.props;
+
+const cardClasses = `
+  relative rounded-xl border border-[var(--color-border)] 
+  bg-black/30 backdrop-blur-sm 
+  transition-all duration-300
+  ${glow ? 'card-glow' : ''}
+  ${noPadding ? '' : 'p-6'}
+  ${className}
+`;
+---
+
+<div class={cardClasses}>
+  <slot />
+</div>
+
+<style>
+  /* Additional card-specific styles if needed */
+  div {
+    will-change: transform, box-shadow;
+  }
+</style>

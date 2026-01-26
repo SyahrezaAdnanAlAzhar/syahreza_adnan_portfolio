@@ -1,0 +1,475 @@
+---
+// No imports needed - using custom hero buttons
+---
+
+<section class="relative min-h-screen flex items-center justify-center py-20">
+  <div class="hero-section-container">
+    
+    <!-- Desktop & Tablet Layout (md and up) -->
+    <div class="hidden md:flex flex-col gap-8">
+      <!-- Main Row: Text Left | Profile Center | Description Right -->
+      <div class="flex flex-row items-center justify-between gap-6 lg:gap-10">
+        
+        <!-- Left Column: Greeting, Name, Role -->
+        <div class="flex flex-col gap-2 flex-1 max-w-sm lg:max-w-md">
+          <!-- Greeting -->
+          <p class="hero-greeting text-lg lg:text-xl font-semibold text-gray-500">
+            Good Morning
+          </p>
+          
+          <!-- Name -->
+          <h1 class="hero-name text-2xl lg:text-3xl xl:text-4xl">
+            <span class="font-bold text-black">I'm </span>
+            <span class="hero-name-highlight font-black text-white bg-orange-500 px-2 py-1 inline-block">
+              Syahreza Adnan Al Azhar
+            </span>
+          </h1>
+          
+          <!-- Role -->
+          <p class="hero-role text-xl lg:text-2xl font-bold text-black">
+            AI Engineer & Full Stack Developer
+          </p>
+          
+          <!-- Education -->
+          <p class="hero-education text-sm lg:text-base font-normal text-black">
+            Bachelor of Software Engineering<br />Telkom University
+          </p>
+        </div>
+        
+        <!-- Center: Profile Picture Stack -->
+        <div class="hero-profile-container flex-shrink-0">
+          <div class="hero-profile-stack relative w-40 lg:w-52 xl:w-64">
+            <!-- Base container - clips bottom only -->
+            <div class="hero-profile-base">
+              <!-- Circle Background -->
+              <div class="hero-circle"></div>
+              <!-- Profile Image -->
+              <img 
+                src={`${import.meta.env.BASE_URL}/images/profile_picture_transparent.png`}
+                alt="Syahreza Adnan"
+                class="hero-profile-img"
+                loading="eager"
+              />
+            </div>
+          </div>
+        </div>
+        
+        <!-- Right: Description -->
+        <div class="flex-1 max-w-sm lg:max-w-md">
+          <p class="hero-description text-base lg:text-lg font-normal text-black leading-relaxed">
+            Passionate about building <span class="hero-highlight-text bg-violet-200 px-1">intelligent systems</span> and <span class="hero-highlight-text bg-violet-200 px-1">scalable applications</span>. Specializing in Machine Learning, Computer Vision, and Web Development.
+          </p>
+        </div>
+      </div>
+      
+      <!-- Buttons Row -->
+      <div class="hero-cta flex flex-row gap-6 justify-center items-center">
+        <a 
+          href="https://docs.google.com/document/d/1ug2laTDstN6yNvEag3WRUo9FBI7xvyxQQXWscMBMLf0/export?format=pdf"
+          class="hero-btn-download flex items-center gap-2 px-6 py-3 lg:px-8 lg:py-4 bg-orange-500 text-white font-semibold border-2 border-transparent shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-white hover:text-orange-500 hover:border-orange-500"
+          download
+          target="_blank"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          Download CV
+        </a>
+        <a 
+          href="#contact"
+          class="hero-btn-contact flex items-center gap-2 px-6 py-3 lg:px-8 lg:py-4 bg-white text-orange-500 font-semibold border-2 border-orange-500 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-orange-500 hover:text-white hover:border-orange-500"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+          Get in Touch
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile Layout (below md) -->
+    <div class="flex md:hidden flex-col items-center gap-6">
+      
+      <!-- Profile Picture Stack -->
+      <div class="hero-profile-container">
+        <div class="hero-profile-stack relative w-48 sm:w-56">
+          <!-- Base container - clips bottom only -->
+          <div class="hero-profile-base">
+            <!-- Circle Background -->
+            <div class="hero-circle"></div>
+            <!-- Profile Image -->
+            <img 
+              src={`${import.meta.env.BASE_URL}/images/profile_picture_transparent.png`}
+              alt="Syahreza Adnan"
+              class="hero-profile-img"
+              loading="eager"
+            />
+          </div>
+        </div>
+      </div>
+      
+      <!-- Text Column: Greeting, Name, Role -->
+      <div class="flex flex-col gap-2 text-center">
+        <!-- Greeting -->
+        <p class="hero-greeting text-base sm:text-lg font-semibold text-gray-500">
+          Good Morning
+        </p>
+        
+        <!-- Name -->
+        <h1 class="hero-name text-xl sm:text-2xl">
+          <span class="font-bold text-black">I'm </span>
+          <span class="hero-name-highlight font-black text-white bg-orange-500 px-2 py-1 inline-block">
+            Syahreza Adnan Al Azhar
+          </span>
+        </h1>
+        
+        <!-- Role -->
+        <p class="hero-role text-lg sm:text-xl font-bold text-black">
+          AI Engineer & Full Stack Developer
+        </p>
+        
+        <!-- Education -->
+        <p class="hero-education text-xs sm:text-sm font-normal text-black">
+          Bachelor of Software Engineering<br />Telkom University
+        </p>
+      </div>
+      
+      <!-- Description -->
+      <p class="hero-description text-sm sm:text-base font-normal text-black leading-relaxed text-center px-4">
+        Passionate about building <span class="hero-highlight-text bg-violet-200 px-1">intelligent systems</span> and <span class="hero-highlight-text bg-violet-200 px-1">scalable applications</span>. Specializing in Machine Learning, Computer Vision, and Web Development.
+      </p>
+      
+      <!-- Buttons Row -->
+      <div class="hero-cta flex flex-col sm:flex-row gap-3 justify-center items-center w-full sm:w-auto">
+        <a 
+          href="https://docs.google.com/document/d/1ug2laTDstN6yNvEag3WRUo9FBI7xvyxQQXWscMBMLf0/export?format=pdf"
+          class="hero-btn-download flex items-center gap-2 px-3 py-2 sm:px-6 sm:py-3 bg-orange-500 text-white text-sm sm:text-base font-semibold border-2 border-transparent shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:bg-white hover:text-orange-500 hover:border-orange-500"
+          download
+          target="_blank"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          Download CV
+        </a>
+        <a 
+          href="#contact"
+          class="hero-btn-contact flex items-center gap-2 px-3 py-2 sm:px-6 sm:py-3 bg-white text-orange-500 text-sm sm:text-base font-semibold border-2 border-orange-500 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:bg-orange-500 hover:text-white hover:border-orange-500"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+          Get in Touch
+        </a>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce hidden md:block">
+      <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Hero Section Container */
+  .hero-section-container {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    width: 100%;
+  }
+  
+  /* Profile stack container - allows overflow at top */
+  .hero-profile-stack {
+    position: relative;
+    overflow: visible;
+  }
+  
+  /* Base container - clips bottom only with rounded bottom */
+  .hero-profile-base {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 5 / 6;
+    overflow: hidden;
+    border-radius: 0 0 30% 30%;
+  }
+  
+  /* Circle positioned at bottom of base */
+  .hero-circle {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: rgb(253 230 138); /* amber-200 */
+    box-shadow: inset 0 0 0 2px black;
+    border: 2px solid black;
+  }
+  
+  /* Image positioned at bottom of base */
+  .hero-profile-img {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 120%;
+    object-fit: contain;
+    object-position: bottom;
+    clip-path: inset(100% 0 0 0);
+    /* border-radius: 0 0 45% 50%; */
+    /* opacity: 0; */
+  }
+  
+  /* Hero buttons - optimized transitions with border-radius */
+  .hero-btn-download,
+  .hero-btn-contact {
+    padding: 0.75rem 1.5rem;
+    border-radius: 64px;
+    will-change: transform, background-color, color, border-color, border-radius;
+    transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+                color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+                border-radius 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hero-btn-download:hover,
+  .hero-btn-contact:hover {
+    transform: scale(1.03);
+    border-radius: 1rem;
+  }
+  
+  /* Mobile layout padding */
+  .flex.md\:hidden {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Responsive container padding */
+  @media (min-width: 640px) {
+    .hero-section-container {
+      padding: 0 2rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .hero-section-container {
+      padding: 0 3rem;
+    }
+    
+    .hero-btn-download,
+    .hero-btn-contact {
+      padding: 1rem 2rem;
+    }
+  }
+  
+  /* Text highlight background animation */
+  .hero-name-highlight,
+  .hero-highlight-text {
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+  }
+  
+  .hero-name-highlight {
+    background-image: linear-gradient(to right, rgb(249 115 22) 100%, rgb(249 115 22) 100%);
+    background-color: transparent;
+  }
+  
+  .hero-highlight-text {
+    background-image: linear-gradient(to right, rgb(221 214 254) 100%, rgb(221 214 254) 100%);
+    background-color: transparent;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function getGreeting(): string {
+    const hour = new Date().getHours();
+    if (hour >= 5 && hour < 12) {
+      return 'Good Morning';
+    } else if (hour >= 12 && hour < 17) {
+      return 'Good Afternoon';
+    } else if (hour >= 17 && hour < 21) {
+      return 'Good Evening';
+    } else {
+      return 'Good Night';
+    }
+  }
+
+  function initHeroAnimations() {
+    // Update greeting based on local time
+    const greetingElements = document.querySelectorAll('.hero-greeting');
+    const greeting = getGreeting();
+    greetingElements.forEach(el => {
+      el.textContent = greeting;
+    });
+
+    const mm = gsap.matchMedia();
+
+    // Common animation for all screen sizes
+    const animateHero = () => {
+      const tl = gsap.timeline();
+
+      // Step 1: Circle scales in with bounce (preserve translateX)
+      tl.to('.hero-circle',
+        {
+          transform: 'translateX(-50%) scale(1)',
+          duration: 0.8,
+          ease: 'elastic.out(1, 0.5)'
+        }
+      );
+
+      // Step 2: Profile image reveals from bottom to top (staggered after circle)
+      tl.to('.hero-profile-img',
+        {
+          clipPath: 'inset(0% 0 0 0)',
+          duration: 0.8,
+          ease: 'power2.out'
+        },
+        '-=0.4' // Start slightly before circle finishes
+      );
+
+      // Step 3: Text elements fade in
+      tl.fromTo('.hero-greeting',
+        { autoAlpha: 0, y: 20 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.5,
+          ease: 'power2.out'
+        },
+        '-=0.3'
+      );
+
+      // Step 4: Name with background fill animation
+      tl.fromTo('.hero-name',
+        { autoAlpha: 0, y: 20 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.5,
+          ease: 'power2.out'
+        },
+        '-=0.2'
+      );
+
+      // Name highlight background fill
+      tl.to('.hero-name-highlight',
+        {
+          backgroundSize: '100% 100%',
+          duration: 0.6,
+          ease: 'power2.inOut'
+        },
+        '-=0.3'
+      );
+
+      // Step 5: Role
+      tl.fromTo('.hero-role',
+        { autoAlpha: 0, y: 20 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.5,
+          ease: 'power2.out'
+        },
+        '-=0.4'
+      );
+
+      // Step 5.5: Education
+      tl.fromTo('.hero-education',
+        { autoAlpha: 0, y: 20 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.5,
+          ease: 'power2.out'
+        },
+        '-=0.4'
+      );
+
+      // Step 6: Description with highlight fill
+      tl.fromTo('.hero-description',
+        { autoAlpha: 0, y: 20 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.5,
+          ease: 'power2.out'
+        },
+        '-=0.3'
+      );
+
+      // Description highlight background fills
+      tl.to('.hero-highlight-text',
+        {
+          backgroundSize: '100% 100%',
+          duration: 0.6,
+          stagger: 0.1,
+          ease: 'power2.inOut'
+        },
+        '-=0.2'
+      );
+
+      // Step 7: Buttons
+      tl.fromTo('.hero-cta',
+        { autoAlpha: 0, y: 20 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.5,
+          ease: 'power2.out'
+        },
+        '-=0.3'
+      );
+
+      // Step 8: Scroll indicator
+      tl.fromTo('.scroll-indicator',
+        { autoAlpha: 0, y: -20 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.5,
+          ease: 'power2.out'
+        },
+        '-=0.2'
+      );
+
+      return tl;
+    };
+
+    // Desktop animations (≥1024px)
+    mm.add("(min-width: 1024px)", () => {
+      animateHero();
+    });
+
+    // Tablet animations (768px-1023px)
+    mm.add("(min-width: 768px) and (max-width: 1023px)", () => {
+      animateHero();
+    });
+
+    // Mobile animations (<768px)
+    mm.add("(max-width: 767px)", () => {
+      animateHero();
+    });
+  }
+
+  // Initialize on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroAnimations);
+  } else {
+    initHeroAnimations();
+  }
+
+  // Re-initialize on Astro navigation
+  document.addEventListener('astro:page-load', initHeroAnimations);
+</script>

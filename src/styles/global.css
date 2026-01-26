@@ -1,1 +1,317 @@
 @import "tailwindcss";
+@import "material-icons/iconfont/round.css";
+@plugin "@tailwindcss/typography";
+
+/* ===================================
+   CUSTOM THEME CONFIGURATION
+   =================================== */
+
+@theme {
+  /* Custom Colors - Neon Theme */
+  --color-neon-yellow: #ffe61f;
+  --color-neon-orange: #ff991c;
+  --color-dark-bg: #000000;
+  --color-light-bg: #ffffff;
+
+  /* Font Families */
+  --font-family-heading: "Quantico", sans-serif;
+  --font-family-body: "Montserrat", sans-serif;
+
+  /* Custom Shadows (Neon Glow Effects) */
+  --shadow-neon-yellow: 0 0 10px #ffe61f, 0 0 20px #ffe61f, 0 0 30px #ffe61f;
+  --shadow-neon-orange: 0 0 10px #ff991c, 0 0 20px #ff991c, 0 0 30px #ff991c;
+  --shadow-neon-yellow-sm: 0 0 5px #ffe61f, 0 0 10px #ffe61f;
+  --shadow-neon-orange-sm: 0 0 5px #ff991c, 0 0 10px #ff991c;
+
+  /* Animation Durations */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 800ms;
+}
+
+/* ===================================
+   GLOBAL STYLES
+   =================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-body);
+  overflow-x: hidden;
+}
+
+/* ===================================
+   DARK MODE & LIGHT MODE VARIABLES
+   =================================== */
+
+/* Light mode (default) - Bone white theme */
+:root {
+  color-scheme: light;
+  --color-background: #f5f2eb;
+  --color-text: #2d2d2d;
+  --color-text-secondary: rgba(45, 45, 45, 0.7);
+  --color-primary: var(--color-neon-orange);
+  --color-accent: var(--color-neon-yellow);
+  --color-border: rgba(45, 45, 45, 0.2);
+}
+
+/* Dark mode override (if needed in future) */
+.dark {
+  color-scheme: dark;
+  --color-background: var(--color-dark-bg);
+  --color-text: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.7);
+  --color-primary: var(--color-neon-yellow);
+  --color-accent: var(--color-neon-orange);
+  --color-border: rgba(255, 230, 31, 0.2);
+}
+
+/* Light mode explicit class */
+.light {
+  color-scheme: light;
+  --color-background: #f5f2eb;
+  --color-text: #2d2d2d;
+  --color-text-secondary: rgba(45, 45, 45, 0.7);
+  --color-primary: var(--color-neon-orange);
+  --color-accent: var(--color-neon-yellow);
+  --color-border: rgba(45, 45, 45, 0.2);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sr-only:focus,
+.focus\:not-sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* ===================================
+   CUSTOM UTILITY CLASSES
+   =================================== */
+
+/* Typography - Headings */
+.font-heading {
+  font-family: var(--font-family-heading);
+}
+
+.font-body {
+  font-family: var(--font-family-body);
+}
+
+/* Neon text glow effects */
+.text-glow-yellow {
+  color: var(--color-neon-yellow);
+  text-shadow: var(--shadow-neon-yellow-sm);
+}
+
+.text-glow-orange {
+  color: var(--color-neon-orange);
+  text-shadow: var(--shadow-neon-orange-sm);
+}
+
+/* Card glow effects */
+.card-glow {
+  box-shadow: var(--shadow-neon-yellow-sm);
+  transition:
+    box-shadow var(--duration-normal),
+    transform var(--duration-normal);
+}
+
+.card-glow:hover {
+  box-shadow: var(--shadow-neon-yellow);
+  transform: translateY(-4px);
+}
+
+.card-glow-orange {
+  box-shadow: var(--shadow-neon-orange-sm);
+  transition:
+    box-shadow var(--duration-normal),
+    transform var(--duration-normal);
+}
+
+.card-glow-orange:hover {
+  box-shadow: var(--shadow-neon-orange);
+  transform: translateY(-4px);
+}
+
+/* Connector line between cards */
+.connector-line {
+  position: relative;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--color-primary) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity var(--duration-slow) ease;
+}
+
+.connector-line.active {
+  opacity: 1;
+}
+
+/* Expandable card transition */
+.expandable-card {
+  transition:
+    max-height var(--duration-slower) ease,
+    opacity var(--duration-normal) ease;
+  overflow: hidden;
+}
+
+.expandable-card.collapsed {
+  max-height: 200px;
+}
+
+.expandable-card.expanded {
+  max-height: 5000px;
+}
+
+/* Button styles */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-dark-bg);
+  padding: 0.75rem 2rem;
+  border-radius: 1rem;
+  font-weight: 600;
+  transition: all var(--duration-normal);
+  box-shadow: var(--shadow-neon-yellow-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  box-shadow: var(--shadow-neon-yellow);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  padding: 0.75rem 2rem;
+  border: 2px solid var(--color-primary);
+  border-radius: 1rem;
+  font-weight: 600;
+  transition: all var(--duration-normal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-primary);
+  color: var(--color-dark-bg);
+  box-shadow: var(--shadow-neon-yellow-sm);
+}
+
+/* Smooth scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+/* Focus visible for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Selection color */
+::selection {
+  background-color: var(--color-primary);
+  color: var(--color-dark-bg);
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn var(--duration-slower) ease-out;
+}
+
+/* Slide down animation for navbar */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-down {
+  animation: slideDown var(--duration-slow) ease-out;
+}

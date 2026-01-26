@@ -1,0 +1,395 @@
+---
+// Aurora Background - Inspired by @nauverse/react-aurora-background
+// Pure CSS implementation that works smoothly on mobile and desktop
+---
+
+<div class="aurora-container">
+  <div class="aurora-bubble aurora-bubble-1"></div>
+  <div class="aurora-bubble aurora-bubble-2"></div>
+  <div class="aurora-bubble aurora-bubble-3"></div>
+  <div class="aurora-bubble aurora-bubble-4"></div>
+  <div class="aurora-bubble aurora-bubble-5"></div>
+  <div class="aurora-bubble aurora-bubble-6"></div>
+  <div class="aurora-bubble aurora-bubble-7"></div>
+  <div class="aurora-bubble aurora-bubble-8"></div>
+  <div class="aurora-bubble aurora-bubble-9"></div>
+  <div class="aurora-bubble aurora-bubble-10"></div>
+  <div class="aurora-bubble aurora-bubble-11"></div>
+</div>
+
+<style>
+  .aurora-container {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    overflow: hidden;
+    pointer-events: none;
+    background: var(--color-background);
+  }
+
+  .aurora-bubble {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(10vw);
+    will-change: transform, opacity;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+
+  /* Black Bubbles (5 of 11 = 45.5%) */
+  
+  /* Bubble 1 - Deep Black */
+  .aurora-bubble-1 {
+    width: 100vw;
+    height: 100vw;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 70%);
+    top: -50vw;
+    left: 10%;
+    animation: aurora-float-1 15s ease-in-out infinite alternate;
+  }
+
+  /* Bubble 2 - Dark Shadow */
+  .aurora-bubble-2 {
+    width: 95vw;
+    height: 95vw;
+    background: radial-gradient(circle, rgba(20, 20, 20, 0.45) 0%, rgba(20, 20, 20, 0) 70%);
+    top: 40%;
+    right: -40vw;
+    animation: aurora-float-2 13s ease-in-out infinite alternate;
+  }
+
+  /* Bubble 3 - Charcoal */
+  .aurora-bubble-3 {
+    width: 110vw;
+    height: 110vw;
+    background: radial-gradient(circle, rgba(15, 15, 15, 0.4) 0%, rgba(15, 15, 15, 0) 70%);
+    bottom: -45vw;
+    left: -30vw;
+    animation: aurora-float-3 16s ease-in-out infinite alternate;
+  }
+
+  /* Bubble 4 - Midnight Black */
+  .aurora-bubble-4 {
+    width: 85vw;
+    height: 85vw;
+    background: radial-gradient(circle, rgba(10, 10, 10, 0.48) 0%, rgba(10, 10, 10, 0) 70%);
+    top: 60%;
+    left: 40%;
+    animation: aurora-float-4 14s ease-in-out infinite alternate;
+  }
+
+  /* Bubble 5 - Dark Smoke */
+  .aurora-bubble-5 {
+    width: 90vw;
+    height: 90vw;
+    background: radial-gradient(circle, rgba(25, 25, 25, 0.42) 0%, rgba(25, 25, 25, 0) 70%);
+    bottom: 20%;
+    right: 15%;
+    animation: aurora-float-5 12s ease-in-out infinite alternate;
+  }
+
+  /* Colored Accent Bubbles (6 of 11 = 54.5%) */
+  
+  /* Bubble 6 - Neon Yellow */
+  .aurora-bubble-6 {
+    width: 70vw;
+    height: 70vw;
+    background: radial-gradient(circle, rgba(255, 230, 31, 0.4) 0%, rgba(255, 230, 31, 0) 70%);
+    top: 10%;
+    left: -25vw;
+    animation: aurora-float-6 10s ease-in-out infinite alternate;
+  }
+
+  /* Bubble 7 - Neon Orange */
+  .aurora-bubble-7 {
+    width: 65vw;
+    height: 65vw;
+    background: radial-gradient(circle, rgba(255, 153, 28, 0.38) 0%, rgba(255, 153, 28, 0) 70%);
+    bottom: 35%;
+    right: -20vw;
+    animation: aurora-float-7 11s ease-in-out infinite alternate;
+  }
+
+  /* Bubble 8 - Dark Magenta */
+  .aurora-bubble-8 {
+    width: 75vw;
+    height: 75vw;
+    background: radial-gradient(circle, rgba(139, 0, 139, 0.4) 0%, rgba(139, 0, 139, 0) 70%);
+    top: 25%;
+    right: 20%;
+    animation: aurora-float-8 13s ease-in-out infinite alternate;
+  }
+
+  /* Bubble 9 - Ye5;
+    }
+    50% {
+      transform: translate(-18vw, 25vh) scale(1.15);
+      opacity: 0.65;
+    }
+    100% {
+      transform: translate(12vw, -12vh) scale(0.92);
+      opacity: 0.75;
+    }
+  }
+
+  @keyframes aurora-float-2 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: translate(-22vw, -18vh) scale(1.2);
+      opacity: 0.6;
+    }
+    100% {
+      transform: translate(15vw, 10vh) scale(0.88);
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes aurora-float-3 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.75;
+    }
+    50% {
+      transform: translate(20vw, 15vh) scale(1.25);
+      opacity: 0.55;
+    }
+    100% {
+      transform: translate(-15vw, -10vh) scale(0.85);
+      opacity: 0.68;
+    }
+  }
+
+  @keyframes aurora-float-4 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.82;
+    }
+    50% {
+      transform: translate(16vw, -22vh) scale(1.12);
+      opacity: 0.62;
+    }
+    100% {
+      transform: translate(-18vw, 18vh) scale(0.9);
+      opacity: 0.72;
+    }
+  }
+
+  @keyframes aurora-float-5 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.78;
+    }
+    50% {
+      transform: translate(-14vw, 20vh) scale(1.18);
+      opacity: 0.58;
+    }
+    100% {
+      transform: translate(20vw, -15vh) scale(0.93);
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes aurora-float-6 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.7;
+    }
+    50% {
+      transform: translate(25vw, 18vh) scale(1.1);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate(-12vw, -8vh) scale(0.95);
+      opacity: 0.65;
+    }
+  }
+
+  @keyframes aurora-float-7 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.68;
+    }
+    50% {
+      transform: translate(-20vw, -20vh) scale(1.14);
+      opacity: 0.48;
+    }
+    100% {
+      transform: translate(14vw, 14vh) scale(0.92);
+      opacity: 0.6;
+    }
+  }
+
+  @keyframes aurora-float-8 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.72;
+    }
+    50% {
+      transform: translate(18vw, 22vh) scale(1.16);
+      opacity: 0.52;
+    }
+    100% {
+      transform: translate(-16vw, -12vh) scale(0.88);
+      opacity: 0.64;
+    }
+  }
+
+  @keyframes aurora-float-9 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.66;
+    }
+    50% {
+      transform: translate(-24vw, 16vh) scale(1.08);
+      opacity: 0.46;
+    }
+    100% {
+      transform: translate(10vw, -18vh) scale(0.94);
+      opacity: 0.58;
+    }
+  }
+
+  @keyframes aurora-float-10 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.64;
+    }
+    50% {
+      transform: translate(22vw, -16vh) scale(1.13);
+      opacity: 0.44;
+    }
+    100% {
+      transform: translate(-10vw, 20vh) scale(0.91);
+      opacity: 0.56;
+    }
+  }
+
+  @keyframes aurora-float-11 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.62;
+    }
+    50% {
+      transform: translate(-17vw, 24vh) scale(1.2);
+      opacity: 0.42;
+    }
+    100% {
+      transform: translate(19vw, -14vh) scale(0.86);
+      opacity: 0.54
+    .aurora-bubble-7 {
+      width: 80vw;
+      height: 80vw;
+    }
+    
+    .aurora-bubble-8 {
+      width: 95vw;
+      height: 95vw;
+    }
+      transform: translate(0, 0) scale(1);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translate(-15vw, 10vh) scale(1.2);
+      opacity: 0.4;
+    }
+    100% {
+      transform: translate(20vw, -5vh) scale(0.85);
+      opacity: 0.55;
+    }
+  }
+
+  @keyframes aurora-float-4 {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.5;
+    }20vw;
+      height: 120vw;
+    }
+    
+    .aurora-bubble-2 {
+      width: 110vw;
+      height: 110vw;
+    }
+    
+    .aurora-bubble-3 {
+      width: 130vw;
+      height: 130vw;
+    }
+    
+    .aurora-bubble-4 {
+      width: 100vw;
+      height: 100vw;
+    }
+    
+    .aurora-bubble-5 {
+      width: 105vw;
+      height: 105vw;
+    }
+    
+    .aurora-bubble-6 {
+      width: 85vw;
+      height: 85vw;
+    }
+    
+    .aurora-bubble-7 {
+      width: 80vw;
+      height: 80vw;
+    }
+    
+    .aurora-bubble-8 {
+      width: 90vw;
+      height: 90vw;
+    }
+    
+    .aurora-bubble-9 {
+      width: 82vw;
+      height: 82vw;
+    }
+    
+    .aurora-bubble-10 {
+      width: 88vw;
+      height: 88vw;
+    }
+    
+    .aurora-bubble-11 {
+      width: 95vw;
+      height: 95
+
+  /* Mobile optimization */
+  @media (max-width: 767px) {
+    .aurora-bubble {
+      filter: blur(12vw);
+    }
+    
+    .aurora-bubble-1 {
+      width: 100vw;
+      height: 100vw;
+    }
+    
+    .aurora-bubble-2 {
+      width: 85vw;
+      height: 85vw;
+    }
+    
+    .aurora-bubble-3 {
+      width: 110vw;
+      height: 110vw;
+    }
+    
+    .aurora-bubble-4 {
+      width: 90vw;
+      height: 90vw;
+    }
+  }
+
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .aurora-bubble {
+      animation: none;
+    }
+  }
+</style>

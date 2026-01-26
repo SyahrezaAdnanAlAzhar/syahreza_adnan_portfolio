@@ -1,0 +1,55 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'sm' | 'md' | 'lg' | 'responsive';
+  download?: boolean;
+  target?: '_blank' | '_self';
+  class?: string;
+}
+
+const { 
+  href, 
+  variant = 'primary', 
+  size = 'md',
+  download = false,
+  target = '_self',
+  class: className = ''
+} = Astro.props;
+
+const sizeClasses = {
+  sm: 'px-3 py-1.5 text-xs sm:px-4 sm:py-2 sm:text-sm',
+  md: 'px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base',
+  lg: 'px-5 py-2.5 text-sm sm:px-6 sm:py-3 md:px-8 md:py-4 md:text-lg',
+  responsive: 'px-4 py-2 text-sm sm:px-6 sm:py-3 sm:text-base lg:px-8 lg:py-4 lg:text-lg'
+};
+
+const variantClasses = {
+  primary: 'btn-primary',
+  secondary: 'btn-secondary',
+  outline: 'bg-transparent border-2 border-[var(--color-primary)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-black'
+};
+
+const combinedClasses = `flex items-center justify-center rounded-2xl ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
+
+const Element = href ? 'a' : 'button';
+---
+
+{href ? (
+  <a
+    href={href}
+    class={combinedClasses}
+    download={download}
+    target={target}
+    rel={target === '_blank' ? 'noopener noreferrer' : undefined}
+  >
+    <slot />
+  </a>
+) : (
+  <button
+    class={combinedClasses}
+    type="button"
+  >
+    <slot />
+  </button>
+)}

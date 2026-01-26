@@ -1,0 +1,14 @@
+{
+  "search.useIgnoreFiles": false,
+  "files.exclude": {
+    "**/.DS_Store": false,
+    "**/.git": false,
+    "**/.hg": false,
+    "**/.plugin_symlinks": false,
+    "**/.svn": false,
+    "**/.symlinks": false,
+    "**/flutter/ephemeral": false,
+    "**/Flutter/ephemeral": false,
+    "**/Thumbs.db": false
+  }
+}

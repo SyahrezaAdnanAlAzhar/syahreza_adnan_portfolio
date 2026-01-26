@@ -1,0 +1,74 @@
+---
+# ============================================
+# PROJECT MARKDOWN TEMPLATE
+# ============================================
+# Copy this file and rename it to your-project-slug.md
+# Example: tumbuhsehat.md, dense-unet-segmentation.md
+# Delete this comment block after copying
+# ============================================
+
+title: "Your Project Title Here"
+
+# Project Type - Determines card color
+# "software" = Blue color scheme
+# "ai" = Indigo color scheme
+projectType: "software"
+
+# Category - Single string for category badge (white bg, black text)
+# Examples: "Mobile Application", "Web Application", "Semantic Segmentation",
+#           "Object Detection", "Forecasting", "API Development", etc.
+category: "Mobile Application"
+
+# Image - Path relative to public folder
+# Format: images/projects/{your-project-slug}/cover.png
+# The folder should match your markdown filename (without .md)
+image: "images/projects/your-project-slug/cover.png"
+
+# Description - Brief summary shown on card (1-2 sentences)
+description: "A brief one or two sentence description of your project that will be displayed on the card."
+
+# Tech Stack - Array of technology names (displayed as badges)
+# These will be shown as pill badges with 15% opacity of card color
+# Can be empty array [] if no tech stack to display
+techStack:
+  - "Flutter"
+  - "Python"
+  - "TensorFlow"
+  - "FastAPI"
+
+# Order - Controls display order (lower number = appears first)
+order: 1
+
+# Optional: External project link (GitHub, live demo, etc.)
+projectLink: "https://github.com/username/repo"
+---
+
+## Project Overview
+
+Write your detailed project description here. This content will be displayed on the project detail page at /projects/your-project-slug.
+
+### Problem Statement
+
+Describe the problem your project solves.
+
+### Solution
+
+Explain your approach and solution.
+
+## Key Features
+
+### Feature 1
+
+Description of feature 1.
+
+### Feature 2
+
+Description of feature 2.
+
+## Technical Details
+
+Add any technical implementation details, architecture diagrams, or code snippets here.
+
+## Results / Outcomes
+
+Share the results, metrics, or impact of your project.

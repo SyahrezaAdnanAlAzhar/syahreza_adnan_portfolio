@@ -1,0 +1,92 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/layout/Navbar.astro';
+
+export async function getStaticPaths() {
+  const experiences = await getCollection('experiences');
+  return experiences.map((exp) => ({
+    params: { slug: exp.slug },
+    props: { experience: exp },
+  }));
+}
+
+const { experience } = Astro.props;
+const { Content } = await experience.render();
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout 
+  title={`${experience.data.title} at ${experience.data.company} - Syahreza Adnan`}
+  description={`${experience.data.title} experience at ${experience.data.company}. ${experience.data.location}.`}
+>
+  <Navbar />
+  
+  <main class="min-h-screen py-24 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <!-- Back Button -->
+      <a 
+        href={`${base}experience`}
+        class="inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors mb-8"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        Back to Experience
+      </a>
+
+      <!-- Experience Header -->
+      <div class="flex flex-col sm:flex-row gap-6 mb-8">
+        <div class="shrink-0">
+          <img 
+            src={`${base}${experience.data.image}`}
+            alt={`${experience.data.company} logo`}
+            class="w-20 h-20 sm:w-24 sm:h-24 object-contain rounded-lg bg-white/10 p-3"
+          />
+        </div>
+        <div class="flex-1">
+          <h1 class="font-heading text-3xl sm:text-4xl font-bold text-white mb-2">
+            {experience.data.title}
+          </h1>
+          <p class="text-xl text-(--color-primary) font-semibold mb-2">
+            {experience.data.company}
+          </p>
+          <div class="flex flex-wrap gap-4 text-white/70">
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              {experience.data.location}
+            </span>
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+              {experience.data.startDate} - {experience.data.endDate || 'Present'}
+            </span>
+            {experience.data.isRemote && (
+              <span class="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-sm rounded">
+                Remote
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <!-- Tech Stack -->
+      <div class="flex flex-wrap gap-2 mb-8">
+        {experience.data.techStack.map((tech: string) => (
+          <span class="px-3 py-1 bg-white text-gray-800 text-sm font-medium rounded-full">
+            {tech}
+          </span>
+        ))}
+      </div>
+
+      <!-- Content -->
+      <div class="prose prose-invert prose-lg max-w-none">
+        <Content />
+      </div>
+    </div>
+  </main>
+</Layout>

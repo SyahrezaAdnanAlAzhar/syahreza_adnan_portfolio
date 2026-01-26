@@ -1,0 +1,126 @@
+---
+import BaseCard from './BaseCard.astro';
+
+interface Props {
+  id: string;
+  defaultExpanded?: boolean;
+  class?: string;
+}
+
+const { id, defaultExpanded = false, class: className = '' } = Astro.props;
+---
+
+<BaseCard class={`expandable-card overflow-hidden ${className}`} data-card-id={id}>
+  <!-- Header (always visible) -->
+  <div class="expandable-header cursor-pointer select-none" role="button" tabindex="0" aria-expanded={defaultExpanded}>
+    <slot name="header" />
+    
+    <!-- Expand/Collapse Icon -->
+    <button 
+      class="expand-icon ml-auto shrink-0 transition-transform duration-300 p-2 rounded-lg hover:bg-white/5"
+      aria-label="Toggle expand"
+    >
+      <svg class="w-6 h-6 text-(--color-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Expandable Content -->
+  <div 
+    class={`expandable-content overflow-hidden transition-all duration-500 ease-in-out ${defaultExpanded ? 'expanded' : ''}`}
+    style={defaultExpanded ? '' : 'max-height: 0; opacity: 0;'}
+  >
+    <div class="pt-4 border-t border-white/10 mt-4">
+      <slot name="content" />
+    </div>
+  </div>
+</BaseCard>
+
+<style>
+  .expandable-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .expandable-content.expanded {
+    max-height: 2000px !important;
+    opacity: 1 !important;
+  }
+
+  .expandable-card[data-expanded="true"] .expand-icon {
+    transform: rotate(180deg);
+  }
+</style>
+
+<script>
+  function initExpandableCards() {
+    const cards = document.querySelectorAll('.expandable-card');
+    
+    cards.forEach(card => {
+      const header = card.querySelector('.expandable-header') as HTMLElement;
+      const content = card.querySelector('.expandable-content') as HTMLElement;
+      const icon = card.querySelector('.expand-icon');
+      
+      if (!header || !content || !icon) return;
+
+      const toggle = () => {
+        const isExpanded = content.classList.contains('expanded');
+        
+        if (isExpanded) {
+          // Collapse
+          content.style.maxHeight = '0';
+          content.style.opacity = '0';
+          content.classList.remove('expanded');
+          card.setAttribute('data-expanded', 'false');
+          header.setAttribute('aria-expanded', 'false');
+        } else {
+          // Expand
+          content.style.maxHeight = content.scrollHeight + 'px';
+          content.style.opacity = '1';
+          content.classList.add('expanded');
+          card.setAttribute('data-expanded', 'true');
+          header.setAttribute('aria-expanded', 'true');
+          
+          // Auto-adjust max-height after transition
+          setTimeout(() => {
+            if (content.classList.contains('expanded')) {
+              content.style.maxHeight = '2000px';
+            }
+          }, 500);
+        }
+      };
+
+      // Click event
+      header.addEventListener('click', toggle);
+      
+      // Keyboard support
+      header.addEventListener('keydown', (e: KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggle();
+        }
+      });
+
+      // Set initial state
+      const defaultExpanded = header.getAttribute('aria-expanded') === 'true';
+      if (defaultExpanded) {
+        card.setAttribute('data-expanded', 'true');
+        content.style.maxHeight = '2000px';
+        content.style.opacity = '1';
+      }
+    });
+  }
+
+  // Initialize on page load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initExpandableCards);
+  } else {
+    initExpandableCards();
+  }
+
+  // Re-initialize on Astro navigation (for View Transitions)
+  document.addEventListener('astro:page-load', initExpandableCards);
+</script>

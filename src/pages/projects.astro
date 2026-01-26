@@ -1,0 +1,124 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import ExpandableCard from '../components/cards/ExpandableCard.astro';
+import ConnectorLine from '../components/ui/ConnectorLine.astro';
+
+// Get all projects sorted by order and render them
+const projectsData = (await getCollection('projects'))
+  .sort((a, b) => a.data.order - b.data.order);
+
+const projects = await Promise.all(
+  projectsData.map(async (proj) => ({
+    ...proj,
+    Content: (await proj.render()).Content
+  }))
+);
+---
+
+<Layout 
+  title="Projects - Syahreza Adnan"
+  description="Explore my portfolio of software development and AI/ML projects, from web applications to computer vision solutions."
+>
+  <main class="min-h-screen py-24 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <!-- Page Header -->
+      <div class="text-center mb-16">
+        <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-glow-yellow mb-4">
+          Projects
+        </h1>
+        <p class="text-lg text-white/70 max-w-2xl mx-auto">
+          A showcase of my technical projects spanning web development, machine learning, and computer vision.
+        </p>
+      </div>
+
+      <!-- Projects List -->
+      <div class="space-y-8">
+        {projects.map((project, index) => (
+          <div class="relative">
+            <ExpandableCard id={`project-${project.id}`} defaultExpanded={index === 0}>
+              <!-- Header Slot -->
+              <div slot="header" class="flex flex-col gap-4 w-full">
+                <!-- Project Image -->
+                <div class="relative w-full h-48 rounded-lg overflow-hidden bg-white/5">
+                  <img 
+                    src={`/${project.data.image}`} 
+                    alt={project.data.title}
+                    class="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  {project.data.category && (
+                    <span class="absolute top-3 right-3 px-3 py-1 text-xs rounded-full bg-black/80 backdrop-blur-sm border border-(--color-primary)/30 text-(--color-primary) uppercase font-semibold">
+                      {project.data.category}
+                    </span>
+                  )}
+                </div>
+
+                <!-- Header Info -->
+                <div class="space-y-2">
+                  <h3 class="font-heading text-xl md:text-2xl font-semibold" style="color: var(--color-primary);">
+                    {project.data.title}
+                  </h3>
+                  <p class="text-sm text-white/70 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    {project.data.date}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Content Slot -->
+              <div slot="content" class="space-y-6">
+                <!-- Description -->
+                <div class="prose prose-invert prose-lg max-w-none">
+                  <project.Content />
+                </div>
+
+                <!-- Tech Stack -->
+                {project.data.techStack && project.data.techStack.length > 0 && (
+                  <div>
+                    <h4 class="font-heading text-lg font-semibold mb-3" style="color: var(--color-accent);">
+                      Technologies Used
+                    </h4>
+                    <div class="flex flex-wrap gap-2">
+                      {project.data.techStack.map(tech => (
+                        <span class="px-3 py-1 text-sm rounded-full bg-(--color-primary)/10 border border-(--color-primary)/30 text-(--color-primary)">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <!-- Project Link -->
+                {project.data.projectLink && (
+                  <div>
+                    <a 
+                      href={project.data.projectLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-(--color-primary)/10 border border-(--color-primary) text-(--color-primary) hover:bg-(--color-primary)/20 transition-all duration-300 font-semibold"
+                    >
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                      </svg>
+                      View Project
+                    </a>
+                  </div>
+                )}
+              </div>
+            </ExpandableCard>
+
+            <!-- Connector Line (not for last item) -->
+            {index < projects.length - 1 && (
+              <div class="flex justify-center my-6">
+                <ConnectorLine />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </main>
+</Layout>

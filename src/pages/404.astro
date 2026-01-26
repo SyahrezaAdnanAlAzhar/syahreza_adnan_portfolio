@@ -1,0 +1,127 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/ui/Button.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout title="404 - Page Not Found">
+  <main class="min-h-screen flex items-center justify-center px-4 py-20">
+    <div class="max-w-2xl mx-auto text-center space-y-8">
+      <!-- 404 Illustration -->
+      <div class="relative">
+        <h1 class="font-heading text-[150px] sm:text-[200px] md:text-[250px] font-bold text-glow-yellow opacity-20 select-none">
+          404
+        </h1>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <svg class="w-32 h-32 sm:w-40 sm:h-40 text-(--color-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Message -->
+      <div class="space-y-4">
+        <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-glow-yellow">
+          Page Not Found
+        </h2>
+        <p class="text-lg sm:text-xl text-white/70 max-w-md mx-auto">
+          Oops! The page you're looking for doesn't exist. It might have been moved or deleted.
+        </p>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
+        <Button href={`${base}`} variant="primary" size="lg">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+          Go Home
+        </Button>
+        <Button href="javascript:history.back()" variant="secondary" size="lg">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          Go Back
+        </Button>
+      </div>
+
+      <!-- Helpful Links -->
+      <div class="pt-8">
+        <p class="text-sm text-white/50 mb-4">You might be interested in:</p>
+        <div class="flex flex-wrap gap-3 justify-center">
+          <a href={`${base}experience`} class="text-sm text-(--color-primary) hover:text-(--color-accent) transition-colors">
+            Experience
+          </a>
+          <span class="text-white/30">•</span>
+          <a href={`${base}projects`} class="text-sm text-(--color-primary) hover:text-(--color-accent) transition-colors">
+            Projects
+          </a>
+          <span class="text-white/30">•</span>
+          <a href={`${base}awards`} class="text-sm text-(--color-primary) hover:text-(--color-accent) transition-colors">
+            Honors & Awards
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import gsap from 'gsap';
+
+  function init404Animation() {
+    // Animate 404 text
+    gsap.from('h1', {
+      scale: 0,
+      opacity: 0,
+      duration: 1,
+      ease: 'back.out(1.7)'
+    });
+
+    // Animate icon
+    gsap.from('svg.w-32, svg.w-40', {
+      scale: 0,
+      rotation: -180,
+      opacity: 0,
+      duration: 0.8,
+      delay: 0.3,
+      ease: 'back.out(1.7)'
+    });
+
+    // Animate content
+    gsap.from('h2, h2 + p', {
+      y: 30,
+      opacity: 0,
+      duration: 0.6,
+      stagger: 0.2,
+      delay: 0.6
+    });
+
+    // Animate buttons
+    gsap.from('.flex.flex-col.sm\\:flex-row > *', {
+      y: 20,
+      opacity: 0,
+      duration: 0.5,
+      stagger: 0.15,
+      delay: 1
+    });
+
+    // Animate links
+    gsap.from('.flex.flex-wrap.gap-3 a', {
+      scale: 0,
+      opacity: 0,
+      duration: 0.3,
+      stagger: 0.1,
+      delay: 1.3
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init404Animation);
+  } else {
+    init404Animation();
+  }
+
+  document.addEventListener('astro:page-load', init404Animation);
+</script>

@@ -1,0 +1,89 @@
+---
+import BaseCard from './BaseCard.astro';
+
+interface Props {
+  title: string;
+  date: string;
+  image: string;
+  projectLink?: string;
+  techStack: string[];
+  category?: string;
+  class?: string;
+}
+
+const { 
+  title, 
+  date, 
+  image, 
+  projectLink, 
+  techStack,
+  category,
+  class: className = ''
+} = Astro.props;
+---
+
+<BaseCard class={`overflow-hidden group ${className}`}>
+  <div class="space-y-4">
+    <!-- Project Image -->
+    <div class="relative w-full h-48 rounded-lg overflow-hidden bg-white/5">
+      <img 
+        src={`${import.meta.env.BASE_URL}/${image}`} 
+        alt={title}
+        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        loading="lazy"
+      />
+      {category && (
+        <span class="absolute top-3 right-3 px-3 py-1 text-xs rounded-full bg-black/80 backdrop-blur-sm border border-(--color-primary)/30 text-(--color-primary) uppercase font-semibold">
+          {category}
+        </span>
+      )}
+    </div>
+
+    <!-- Content -->
+    <div class="space-y-3">
+      <!-- Title -->
+      <h3 class="font-heading text-xl md:text-2xl font-semibold line-clamp-2" style="color: var(--color-primary);">
+        {title}
+      </h3>
+
+      <!-- Date -->
+      <p class="text-sm text-white/70 flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+        </svg>
+        {date}
+      </p>
+
+      <!-- Tech Stack -->
+      {techStack && techStack.length > 0 && (
+        <div class="flex flex-wrap gap-2">
+          {techStack.slice(0, 4).map(tech => (
+            <span class="px-3 py-1 text-xs rounded-full bg-(--color-primary)/10 border border-(--color-primary)/30 text-(--color-primary)">
+              {tech}
+            </span>
+          ))}
+          {techStack.length > 4 && (
+            <span class="px-3 py-1 text-xs rounded-full bg-white/5 text-white/50">
+              +{techStack.length - 4}
+            </span>
+          )}
+        </div>
+      )}
+
+      <!-- Project Link -->
+      {projectLink && (
+        <a 
+          href={projectLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 text-sm text-(--color-primary) hover:text-(--color-accent) transition-colors duration-300"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+          </svg>
+          View Project
+        </a>
+      )}
+    </div>
+  </div>
+</BaseCard>

@@ -1,44 +1,120 @@
 ---
+import '../styles/global.css';
+import WebGLTopoBackground from '../components/common/WebGLTopoBackground.astro';
+
 interface Props {
   title: string;
   description?: string;
 }
 
-const { title, description = "Syahreza Adnan Portfolio" } = Astro.props;
+const { title, description = "Syahreza Adnan - Software Engineering Student | Full Stack Developer | AI/ML Enthusiast" } = Astro.props;
+
+const site = "https://syahrezaadnanalalzhar.github.io/syahreza_adnan_portfolio/";
+const base = import.meta.env.BASE_URL;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="author" content="Syahreza Adnan Al Azhar" />
+    <meta name="keywords" content="AI Engineer, Full Stack Developer, Machine Learning, Computer Vision, Web Development, Syahreza Adnan, Telkom University" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={site} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${site}images/profile_picture.jpg`} />
+    <meta property="og:site_name" content="Syahreza Adnan Portfolio" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={site} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={`${site}images/profile_picture.jpg`} />
+    
+    <!-- Favicon - Profile Picture -->
+    <link rel="icon" type="image/jpeg" href={`${base}/images/profile_picture.jpg`} />
+    <link rel="apple-touch-icon" href={`${base}/images/profile_picture.jpg`} />
+    <link rel="shortcut icon" type="image/jpeg" href={`${base}/images/profile_picture.jpg`} />
+    
+    <!-- Preconnect to Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Quantico:wght@400;700&display=swap" rel="stylesheet">
     
-    <title>{title}</title>
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Quantico:wght@400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" as="style" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Quantico:wght@400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#F5F2EB" />
   </head>
-  <body class="font-body bg-black text-white dark:bg-black dark:text-white transition-colors duration-300">
-    <slot />
+  <body class="font-body bg-[#F5F2EB] text-[#2D2D2D] transition-colors duration-300">
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-(--color-primary) focus:text-[#F5F2EB] focus:rounded-lg focus:font-semibold">
+      Skip to main content
+    </a>
+    
+    <!-- WebGL Topography Background -->
+    <WebGLTopoBackground />
+    
+    <div id="main-content">
+      <slot />
+    </div>
   </body>
 </html>
 
-<style is:global>
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+<script>
+  // Theme initialization and persistence
+  function initTheme() {
+    const theme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    document.documentElement.classList.toggle('light', theme === 'light');
+    document.body.classList.toggle('dark', theme === 'dark');
+    document.body.classList.toggle('light', theme === 'light');
   }
 
+  // Initialize theme on page load
+  initTheme();
+
+  // Listen for theme changes
+  document.addEventListener('theme-changed', () => {
+    initTheme();
+  });
+
+  // Re-initialize on navigation (for Astro view transitions if used)
+  document.addEventListener('astro:page-load', () => {
+    initTheme();
+  });
+</script>
+
+<style is:global>
   html {
     scroll-behavior: smooth;
   }
 
   body {
     overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* Ensure proper color scheme */
+  .dark {
+    color-scheme: dark;
+  }
+
+  .light {
+    color-scheme: light;
   }
 </style>
