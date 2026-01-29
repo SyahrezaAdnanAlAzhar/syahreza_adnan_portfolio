@@ -221,6 +221,11 @@ const base = import.meta.env.BASE_URL;
     // Animation state
     let animationId: number;
     let isVisible = true;
+    let frameCount = 0;
+    
+    // Performance optimization constants
+    const TIME_LOOP_DURATION = 120.0; // Reset time every 120 seconds to prevent floating-point precision loss
+    const FRAME_SKIP = 2; // Render every 2nd frame (set to 1 to disable skipping)
 
     // Visibility change handler for battery optimization
     function handleVisibilityChange() {
@@ -229,6 +234,7 @@ const base = import.meta.env.BASE_URL;
       } else {
         isVisible = true;
         clock.start(); // Reset clock to prevent time jump
+        frameCount = 0; // Reset frame counter
       }
     }
     document.addEventListener('visibilitychange', handleVisibilityChange);
@@ -266,7 +272,15 @@ const base = import.meta.env.BASE_URL;
       // Skip rendering if tab is not visible
       if (!isVisible) return;
 
-      material.uniforms.time.value = clock.startTime + clock.getElapsedTime();
+      // Frame skipping for performance (render every Nth frame)
+      frameCount++;
+      if (frameCount % FRAME_SKIP !== 0) return;
+
+      // Use modulo time to prevent floating-point precision loss after long sessions
+      // This creates a seamless loop since the noise pattern is continuous
+      const elapsedTime = clock.getElapsedTime();
+      material.uniforms.time.value = elapsedTime % TIME_LOOP_DURATION;
+      
       renderer.render(scene, camera);
     }
     animate();
