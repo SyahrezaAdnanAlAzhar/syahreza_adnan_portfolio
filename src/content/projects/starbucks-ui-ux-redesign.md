@@ -3,7 +3,7 @@ title: "Starbucks UI/UX Redesign"
 projectType: "software"
 category: "UI/UX Design"
 
-image: "images/projects/starbucks-ui-ux-redesign/cover.png"
+image: "images/projects/starbucks-ui-ux-redesign/cover.svg"
 
 description: "Redesigned the UI/UX of the Starbucks application with a more minimalist design, added nutritional information such as calories and sugar content to encourage users to be more health-conscious, and integrated a chatbot feature to provide drink recommendations anytime and anywhere."
 

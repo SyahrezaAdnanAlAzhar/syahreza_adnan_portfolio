@@ -2,7 +2,7 @@
 title: "PKM-KC 2025 - National Funding Award"
 organizer: "Ministry of Higher Education, Science and Technology Indonesia"
 date: "2025"
-image: "images/awards/2-pkm-kc-2025-national-funding-award/logo.png"
+image: "images/awards/2-pkm-kc-2025-national-funding-award/logo.svg"
 order: 2
 ---
 

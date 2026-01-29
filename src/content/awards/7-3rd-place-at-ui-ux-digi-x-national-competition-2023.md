@@ -2,7 +2,7 @@
 title: "3rd Place at UI/UX Digi X National Competition 2023"
 organizer: "Universitas Padjadjaran"
 date: "November 2023"
-image: "images/awards/7-3rd-place-at-ui-ux-digi-x-national-competition-2023/logo.png"
+image: "images/awards/7-3rd-place-at-ui-ux-digi-x-national-competition-2023/logo.svg"
 order: 7
 ---
 

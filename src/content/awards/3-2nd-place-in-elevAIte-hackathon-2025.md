@@ -2,7 +2,7 @@
 title: "2nd Place in elevAIte Hackathon 2025"
 organizer: "Microsoft and Biji-biji Initiative"
 date: "June 2025"
-image: "images/awards/3-2nd-place-in-elevAIte-hackathon-2025/logo.png"
+image: "images/awards/3-2nd-place-in-elevAIte-hackathon-2025/logo.svg"
 order: 3
 ---
 

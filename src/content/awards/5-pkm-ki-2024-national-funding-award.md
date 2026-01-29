@@ -2,7 +2,7 @@
 title: "PKM-KI 2024 - National Funding Award"
 organizer: "Ministry of Education, Culture, Research, and Technology Indonesia"
 date: "2024"
-image: "images/awards/5-pkm-ki-2024-national-funding-award/logo.png"
+image: "images/awards/5-pkm-ki-2024-national-funding-award/logo.svg"
 order: 5
 ---
 

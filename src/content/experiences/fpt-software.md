@@ -4,7 +4,7 @@ company: "FPT Software"
 location: "Vietnam (Remote)"
 startDate: "Sep 2025"
 endDate: "Dec 2025"
-image: "images/experiences/fpt-logo.png"
+image: "images/experiences/fpt-logo.svg"
 techStack:
   [
     "Python",

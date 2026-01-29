@@ -2,7 +2,7 @@
 title: "2nd Place at Literasi Sosial Essay and Webinar Competition"
 organizer: "Universitas Negeri Semarang"
 date: "November 2024"
-image: "images/awards/6-2nd-place-at-literasi-sosial-essay-and-webinar-competition/logo.png"
+image: "images/awards/6-2nd-place-at-literasi-sosial-essay-and-webinar-competition/logo.svg"
 order: 6
 ---
 

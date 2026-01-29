@@ -2,7 +2,7 @@
 title: "1st Runner Up of South-East Asia Regional Poster and Essay Competition"
 organizer: "Universitas Negeri Surabaya"
 date: "July 2023"
-image: "images/awards/8-1st-runner-up-of-south-east-asia-regional-poster-and-essay-competition/logo.png"
+image: "images/awards/8-1st-runner-up-of-south-east-asia-regional-poster-and-essay-competition/logo.svg"
 order: 8
 ---
 

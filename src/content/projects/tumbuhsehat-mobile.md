@@ -3,7 +3,7 @@ title: "TumbuhSehat Mobile Application"
 projectType: "software"
 category: "Mobile Application"
 
-image: "images/projects/tumbuhsehat-mobile/cover.png"
+image: "images/projects/tumbuhsehat-mobile/cover.svg"
 
 description: "TumbuhSehat is a family nutrition tracking app designed for households in Indonesia. The nutritional calculations in this app follow the standards set by the WHO and the Indonesian Ministry of Health."
 

@@ -3,7 +3,7 @@ title: "TumbuhSehat Design"
 projectType: "software"
 category: "UI/UX Design"
 
-image: "images/projects/tumbuhsehat-design/cover.png"
+image: "images/projects/tumbuhsehat-design/cover.svg"
 
 description: "Creating the UI/UX design for the TumbuhSehat app. The design process involved prospective users, namely housewives and health workers, to ensure that the information and flow were in accordance with health guidelines and regulations."
 
