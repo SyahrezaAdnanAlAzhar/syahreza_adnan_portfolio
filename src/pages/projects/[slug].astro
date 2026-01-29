@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/layout/Navbar.astro';
+import OptimizedImage from '../../components/ui/OptimizedImage.astro';
 
 // Get base URL for proper routing
 const base = import.meta.env.BASE_URL;
@@ -58,10 +59,13 @@ const colors = colorMap[project.data.projectType];
       <header class="project-header">
         <!-- Cover Image -->
         <div class="cover-image-container">
-          <img 
-            src={`${baseUrl}${project.data.image}`}
+          <OptimizedImage 
+            src={project.data.image}
             alt={project.data.title}
             class="cover-image"
+            width={1200}
+            height={600}
+            loading="eager"
           />
         </div>
 

@@ -73,13 +73,6 @@ const experiences = await Promise.all(
                   {exp.data.startDate} - {exp.data.endDate || 'Present'}
                 </p>
               </div>
-              <a 
-                href={`${base}experience/${exp.slug}`}
-                class="card-detail-btn"
-                data-color-index={index % 8}
-              >
-                See Detail
-              </a>
             </div>
 
             <!-- Description -->
@@ -320,39 +313,6 @@ const experiences = await Promise.all(
   .card-mobile-date[data-color-index="6"] { border-color: #06b6d4; background-color: #cffafe; }
   .card-mobile-date[data-color-index="7"] { border-color: #f59e0b; background-color: #fef3c7; }
 
-  .card-detail-btn {
-    flex-shrink: 0;
-    padding: 0.5rem 1rem;
-    background-color: #ffffff;
-    color: #000000;
-    font-size: 0.75rem;
-    font-weight: 600;
-    border-radius: 0.5rem;
-    border: 2px solid #000000;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-  }
-  
-  /* Color variants for detail button */
-  .card-detail-btn[data-color-index="0"] { border-color: #6366f1; }
-  .card-detail-btn[data-color-index="1"] { border-color: #f97316; }
-  .card-detail-btn[data-color-index="2"] { border-color: #3b82f6; }
-  .card-detail-btn[data-color-index="3"] { border-color: #a855f7; }
-  .card-detail-btn[data-color-index="4"] { border-color: #22c55e; }
-  .card-detail-btn[data-color-index="5"] { border-color: #ec4899; }
-  .card-detail-btn[data-color-index="6"] { border-color: #06b6d4; }
-  .card-detail-btn[data-color-index="7"] { border-color: #f59e0b; }
-
-  .card-detail-btn[data-color-index="0"]:hover { background-color: #6366f1; color: #ffffff; }
-  .card-detail-btn[data-color-index="1"]:hover { background-color: #f97316; color: #ffffff; }
-  .card-detail-btn[data-color-index="2"]:hover { background-color: #3b82f6; color: #ffffff; }
-  .card-detail-btn[data-color-index="3"]:hover { background-color: #a855f7; color: #ffffff; }
-  .card-detail-btn[data-color-index="4"]:hover { background-color: #22c55e; color: #ffffff; }
-  .card-detail-btn[data-color-index="5"]:hover { background-color: #ec4899; color: #ffffff; }
-  .card-detail-btn[data-color-index="6"]:hover { background-color: #06b6d4; color: #ffffff; }
-  .card-detail-btn[data-color-index="7"]:hover { background-color: #f59e0b; color: #ffffff; }
-
   /* Card Description */
   .card-description {
     color: #000000;
@@ -571,11 +531,6 @@ const experiences = await Promise.all(
       font-size: 1rem;
     }
 
-    .card-detail-btn {
-      padding: 0.5rem 1.25rem;
-      font-size: 0.8125rem;
-    }
-
     .card-description {
       font-size: 1rem;
     }
@@ -638,12 +593,6 @@ const experiences = await Promise.all(
 
     .card-header {
       flex-wrap: wrap;
-    }
-
-    .card-detail-btn {
-      margin-top: 0.5rem;
-      width: 100%;
-      text-align: center;
     }
 
     .card-description {

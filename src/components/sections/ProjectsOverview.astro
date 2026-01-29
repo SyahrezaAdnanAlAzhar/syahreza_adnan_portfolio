@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import SectionHeading from '../ui/SectionHeading.astro';
+import OptimizedImage from '../ui/OptimizedImage.astro';
 import { THEME_COLORS } from '../../constants/theme';
 
 const base = import.meta.env.BASE_URL;
@@ -45,11 +46,12 @@ const aiProjects = allProjects
           >
             <!-- Image Container -->
             <div class="card-image-container">
-              <img 
-                src={`${baseUrl}${project.data.image}`}
+              <OptimizedImage 
+                src={project.data.image}
                 alt={project.data.title}
                 class="card-image"
-                loading="lazy"
+                width={800}
+                height={600}
               />
               <div class="image-overlay">
                 <span class="see-detail-badge">See Detail</span>
@@ -99,11 +101,12 @@ const aiProjects = allProjects
           >
             <!-- Image Container -->
             <div class="card-image-container">
-              <img 
-                src={`${baseUrl}${project.data.image}`}
+              <OptimizedImage 
+                src={project.data.image}
                 alt={project.data.title}
                 class="card-image"
-                loading="lazy"
+                width={800}
+                height={600}
               />
               <div class="image-overlay">
                 <span class="see-detail-badge">See Detail</span>

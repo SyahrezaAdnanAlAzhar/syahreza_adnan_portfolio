@@ -1,0 +1,63 @@
+---
+/**
+ * OptimizedImage - A reusable image component that automatically handles
+ * SVG vs raster image optimization.
+ * 
+ * - SVG files: Uses native <img> to preserve vector quality
+ * - PNG/JPG/WebP: Uses Astro's <Image> with quality="max" for optimization
+ */
+import { Image } from 'astro:assets';
+
+interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+}
+
+const { 
+  src, 
+  alt, 
+  width = 800, 
+  height = 600, 
+  class: className = '',
+  loading = 'lazy'
+} = Astro.props;
+
+// Get base URL for proper routing
+const base = import.meta.env.BASE_URL;
+const baseUrl = base.endsWith('/') ? base : `${base}/`;
+
+// Helper to check if image is SVG
+const isSvg = (path: string) => path.toLowerCase().endsWith('.svg');
+
+// Remove leading slash from src if present
+const cleanSrc = src.startsWith('/') ? src.slice(1) : src;
+
+// Normalize path with base URL for SVG
+const srcWithBase = `${baseUrl}${cleanSrc}`;
+
+// Normalize path for Astro Image component (needs leading slash)
+const normalizedSrc = src.startsWith('/') ? src : `/${src}`;
+---
+
+{isSvg(src) ? (
+  <img 
+    src={srcWithBase}
+    alt={alt}
+    class={className}
+    loading={loading}
+  />
+) : (
+  <Image 
+    src={normalizedSrc}
+    alt={alt}
+    class={className}
+    width={width}
+    height={height}
+    quality="max"
+    loading={loading}
+  />
+)}

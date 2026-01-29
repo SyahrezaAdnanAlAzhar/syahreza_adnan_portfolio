@@ -3,8 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import ExpandableCard from '../components/cards/ExpandableCard.astro';
 import ConnectorLine from '../components/ui/ConnectorLine.astro';
-
-const base = import.meta.env.BASE_URL;
+import OptimizedImage from '../components/ui/OptimizedImage.astro';
 
 // Get all awards sorted by order and render them
 const awardsData = (await getCollection('awards'))
@@ -43,11 +42,12 @@ const awards = await Promise.all(
               <div slot="header" class="flex flex-col gap-4 w-full">
                 <!-- Award Image -->
                 <div class="relative w-full h-48 rounded-lg overflow-hidden bg-white/5">
-                  <img 
-                    src={`${base}${award.data.image}`} 
+                  <OptimizedImage 
+                    src={award.data.image}
                     alt={award.data.title}
                     class="w-full h-full object-cover"
-                    loading="lazy"
+                    width={800}
+                    height={400}
                   />
                 </div>
 

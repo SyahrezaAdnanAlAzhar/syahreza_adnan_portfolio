@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import ExpandableCard from '../components/cards/ExpandableCard.astro';
 import ConnectorLine from '../components/ui/ConnectorLine.astro';
+import OptimizedImage from '../components/ui/OptimizedImage.astro';
 
 // Get all projects sorted by order and render them
 const projectsData = (await getCollection('projects'))
@@ -41,11 +42,12 @@ const projects = await Promise.all(
               <div slot="header" class="flex flex-col gap-4 w-full">
                 <!-- Project Image -->
                 <div class="relative w-full h-48 rounded-lg overflow-hidden bg-white/5">
-                  <img 
-                    src={`/${project.data.image}`} 
+                  <OptimizedImage 
+                    src={project.data.image}
                     alt={project.data.title}
                     class="w-full h-full object-cover"
-                    loading="lazy"
+                    width={800}
+                    height={400}
                   />
                   {project.data.category && (
                     <span class="absolute top-3 right-3 px-3 py-1 text-xs rounded-full bg-black/80 backdrop-blur-sm border border-(--color-primary)/30 text-(--color-primary) uppercase font-semibold">
@@ -59,11 +61,8 @@ const projects = await Promise.all(
                   <h3 class="font-heading text-xl md:text-2xl font-semibold" style="color: var(--color-primary);">
                     {project.data.title}
                   </h3>
-                  <p class="text-sm text-white/70 flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
-                    {project.data.date}
+                  <p class="text-sm text-white/70">
+                    {project.data.description}
                   </p>
                 </div>
               </div>

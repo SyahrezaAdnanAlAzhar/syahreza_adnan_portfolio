@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import ExpandableCard from '../components/cards/ExpandableCard.astro';
 import ConnectorLine from '../components/ui/ConnectorLine.astro';
+import OptimizedImage from '../components/ui/OptimizedImage.astro';
 
 // Get all experiences sorted by order and render them
 const experiencesData = (await getCollection('experiences'))
@@ -41,11 +42,12 @@ const experiences = await Promise.all(
               <div slot="header" class="flex flex-col sm:flex-row gap-4 w-full">
                 <!-- Company Logo -->
                 <div class="shrink-0">
-                  <img 
-                    src={`/${exp.data.image}`} 
+                  <OptimizedImage 
+                    src={exp.data.image}
                     alt={`${exp.data.company} logo`}
                     class="w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-lg bg-white/5 p-2"
-                    loading="lazy"
+                    width={160}
+                    height={160}
                   />
                 </div>
 
